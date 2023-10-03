@@ -13,5 +13,7 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.29"
+    }
 }

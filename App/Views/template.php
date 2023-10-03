@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" type="text/css" href="/resources/css/styles.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="/resources/css/styles.css" /> -->
 
     <title>YADIRECTAPP</title>
 </head>
@@ -18,6 +18,6 @@
 
 
 <footer>
-    <script type="text/javascript" src="/resources/js/js.js"></script>
+    <!-- <script type="text/javascript" src="/resources/js/js.js"></script> -->
 </footer>
 </html>

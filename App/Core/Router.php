@@ -4,7 +4,7 @@ namespace App\Core;
 
 use App\Core\Routes;
 
-//TODO 404 должен выдавать подсказку (делет если пар не инт)
+//TODO 404
 
 class Router {
 
