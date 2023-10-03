@@ -1,0 +1,17 @@
+{
+    "name": "9mars/yadirectapp",
+    "description": "Working with Keywords yandex direct",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mar",
+            "email": "9marssoul9@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
