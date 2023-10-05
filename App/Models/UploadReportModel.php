@@ -13,56 +13,47 @@ use DateTime;
 class UploadReportModel extends BaseModel
 {
     // create table report
-    public function createTable($tableName)
+    public function createTable($tableName, $columns)
     {
         $sql = "CREATE TABLE IF NOT EXISTS $tableName (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        login_client TEXT,
-        search_query TEXT,
-        campaign TEXT,
-        campaign_number TEXT,
-        group_name TEXT,
-        group_number TEXT,
-        ad_number TEXT,
-        show_condition TEXT,
-        show_condition_type TEXT,
-        match_type TEXT,
-        selected_phrase TEXT,
-        targeting_category TEXT,
-        payment_level TEXT,
-        impressions TEXT,
-        weighted_impressions TEXT,
-        clicks TEXT,
-        ctr TEXT,
-        spend TEXT,
-        avg_cpc TEXT,
-        avg_position TEXT,
-        avg_traffic_volume TEXT,
-        avg_click_position TEXT,
-        bounce_rate TEXT,
-        depth_ TEXT,
-        conversion_rate TEXT,
-        goal_cost TEXT,
-        conversions TEXT,
-        income TEXT
-    )";
+        ";
+
+        foreach ($columns as $column) {
+    //        $sql .= $column . " TEXT, ";
+    //        $sql .= "`" . $column . "` TEXT, ";
+            if ($column != '') {
+                $sql .= "`" . $column . "` TEXT, ";
+            } else {
+                echo 'проверить столбцы в 5 строке';
+            }
+        }
+
+        $sql = rtrim($sql, ", ") . ")";
 
         $this->db->getConnection()->query($sql);
     }
 
     // insert table report
-    public function insertReportData($tableName, $rowData)
+    public function insertReportData($tableName, $rowData, $columns)
     {
-//        var_dump($rowData);
-        $placeholders = implode(', ', array_fill(0, count($rowData), '?'));
+    //    var_dump($rowData);
+    //    die();
+    //    if (count($rowData) != count($columns))
+    //    {
+    //        echo "$rowData: ". count($rowData)."<br>";
+    //        echo "$columns: ". count($columns)."<br>";
+    //    }
+        $placeholders = implode(',', array_fill(0, count($rowData), '?'));
+        $columnNames = implode(',', $columns);
         $sql = "INSERT INTO $tableName 
-            (login_client, search_query, campaign, campaign_number, group_name, group_number, ad_number, show_condition, show_condition_type, match_type, selected_phrase, targeting_category, payment_level, impressions, weighted_impressions, clicks, ctr, spend, avg_cpc, avg_position, avg_traffic_volume, avg_click_position, bounce_rate, depth_, conversion_rate, goal_cost, conversions, income)
+            ($columnNames)
             VALUES ($placeholders)";
 
         $stmt = $this->db->getConnection()->prepare($sql);
         $stmt->execute($rowData);
-
     }
+
     // for equal row in db and file
     public function getRowCount($tableName) {
         $query = "SELECT COUNT(*) AS count FROM " . $tableName;

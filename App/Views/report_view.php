@@ -1,7 +1,7 @@
 <?php
-
-//var_dump($report_data);
+// TODO add report name, dates
 ?>
+<h1>REPORT</h1>
 
 <table>
     <thead>

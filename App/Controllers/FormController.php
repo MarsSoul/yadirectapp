@@ -43,7 +43,6 @@ class FormController extends BaseController
                         $endDate = DateTime::createFromFormat('d.m.Y', $dates[1])->format('Y_m_d');
 
                         if ($startDate !== false && $endDate !== false) {
-//                            $reportName = "($hash) Report-" . $startDate ."-". $endDate;
                             $reportName = "MS" . $hash. "_Report_" . $startDate . "___" . $endDate;
                         } else {
                             $reportName = "MS" . $hash. "_Not_date_report" . date('Ymd') . time();
@@ -53,27 +52,52 @@ class FormController extends BaseController
                         $reportName = "MS" . $hash. "_Not_date_report" . date('Ymd') . time();
                     }
 
-//                    $targetFilePath = __DIR__ . "/../../Reports/$reportName.xlsx";
-
-                    $reportModel = new UploadReportModel();
-                    $reportModel->createTable($reportName);
-
                     $worksheet = $spreadsheet->getActiveSheet();
+
                     $startRow = 6;
                     $endRow = $worksheet->getHighestRow();
+                    $endColumn = $worksheet->getHighestColumn();
+                    $columnNames = [];
 
+                    for ($colIndex = 1; $colIndex <= Coordinate::columnIndexFromString($endColumn); ++$colIndex) {
+                        $cellValue = $worksheet->getCellByColumnAndRow($colIndex, 5)->getValue();
+                        if (is_object($cellValue) && get_class($cellValue) === 'PhpOffice\PhpSpreadsheet\RichText\RichText') {
+                            $cellValue = $cellValue->getPlainText();
+                        }
 
-                    for ($rowIndex = $startRow; $rowIndex <= $endRow; $rowIndex++) {
+                        // пустая ячейка
+                        if ($cellValue == '') {
+                            continue;
+                        }
+
+                        $columnNames[] = $cellValue;
+                    }
+
+                    $columnNames = array_map(function($name) {
+                        $name = preg_replace('/[^\p{L}\p{N}\s]/u', '', $name);
+                        $name = strtolower(preg_replace('/\s+/', '_', $name));
+                        return $name;
+                    }, $columnNames);
+                    //                    var_dump($columnNames);
+                    //                    die();
+
+                    $reportModel = new UploadReportModel();
+                    $reportModel->createTable($reportName, $columnNames);
+
+                    for ($rowIndex = $startRow; $rowIndex <= $endRow; ++$rowIndex) {
                         $rowData = [];
+                        for ($colIndex = 1; $colIndex <= Coordinate::columnIndexFromString($endColumn); ++$colIndex) {
+                            $cellValue = $worksheet->getCellByColumnAndRow($colIndex, $rowIndex)->getValue();
 
-                        for ($colIndex = 1; $colIndex <= 28; $colIndex++) {  // 28 = AB
-                            $colLetter = Coordinate::stringFromColumnIndex($colIndex);
-                            $cellValue = $worksheet->getCell($colLetter . $rowIndex)->getValue();
+                            // пустое значение
+                            if (is_null($cellValue)) {
+                                continue;
+                            }
                             $rowData[] = $cellValue;
                         }
-//                            var_dump($rowData);
-                        $reportModel->insertReportData($reportName, $rowData);
+                        $reportModel->insertReportData($reportName, $rowData, $columnNames);
                     }
+
 
                     if ($reportModel->getRowCount($reportName) == $endRow - 5) {
                         $dates = [$startDate, $endDate];
