@@ -2,20 +2,20 @@
 
 namespace App\Controllers;
 
-use App\Core\View;
+use App\Models\GetReportModel;
 
 class HomeController extends BaseController
 {
     public function index()
     {
+        $reportsModel = new GetReportModel();
+        $reports = $reportsModel->getAllReports();
 
         $data = [
-            'homecont' => 'im homecontroller<br><br>',
-            'basecont' => $this->imOK . '<br><br>',
+            'reports' => $reports,
         ];
 
-        $view = new View($data);
-        echo $view->render('home');
+        $this->renderView('home', $data);
     }
 
 }

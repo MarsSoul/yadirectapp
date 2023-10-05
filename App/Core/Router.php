@@ -18,7 +18,6 @@ class Router {
         foreach ($routes as $route) {
             list($method, $url, $action) = $route;
 
-//            if (($method === $requestMethod) || ($method === 'GET' && preg_match("^(HEAD|GET)$^", $requestMethod))) {
             if ($method === $requestMethod ) {
                 if (preg_match("#^$url$#", $requestUri, $matches)) {
                     array_shift($matches);
@@ -35,6 +34,7 @@ class Router {
         list($controllerMethod, $methodName) = explode('@', $action);
         $controllerClass = self::$controllerNamespace . $controllerMethod;
         $controller = new $controllerClass();
-        call_user_func([$controller, $methodName], $params);
+//        call_user_func([$controller, $methodName], $params);
+        call_user_func_array([$controller, $methodName], $params);
     }
 }

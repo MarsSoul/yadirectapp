@@ -10,6 +10,7 @@ class Routes {
 
         ['GET', '/', 'HomeController@index'],
         ['POST', '/uploadReport', 'FormController@uploadReport'],
+        ['GET', '/report/([0-9]+)', 'ReportController@view'],
 
     ];
 }

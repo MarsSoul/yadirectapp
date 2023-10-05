@@ -6,7 +6,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use DateTime;
-use App\Models\ReportModel;
+use App\Models\UploadReportModel;
 
 // TODO DRY , clean , naming
 // TODO interfe
@@ -55,7 +55,7 @@ class FormController extends BaseController
 
 //                    $targetFilePath = __DIR__ . "/../../Reports/$reportName.xlsx";
 
-                    $reportModel = new ReportModel();
+                    $reportModel = new UploadReportModel();
                     $reportModel->createTable($reportName);
 
                     $worksheet = $spreadsheet->getActiveSheet();
@@ -80,7 +80,8 @@ class FormController extends BaseController
                         $reportModel->addReportInfo($reportName, $dates);
                         // clear db table dates
                         $reportModel->cleanReportTables();
-                        echo 'OK'; // locaton home
+
+                        header('Location: /');
 
                     } else {
                         echo 'количество строк в файле и в базе данных не совпадает, что то пошло не так';

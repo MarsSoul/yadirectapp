@@ -10,7 +10,7 @@ use DateTime;
 // TODO err
 // TODO comm
 
-class ReportModel extends BaseModel
+class UploadReportModel extends BaseModel
 {
     // create table report
     public function createTable($tableName)
