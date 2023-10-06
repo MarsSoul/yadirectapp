@@ -12,6 +12,7 @@ class Routes {
         ['POST', '/uploadReport', 'FormController@uploadReport'],
         ['GET', '/report/([0-9]+)', 'ReportController@showReport'],
         ['GET', '/campaigns/([0-9]+)', 'ReportController@showCampaigns'],
+        ['GET', '/adGroups/([0-9]+)/([^/]+)', 'ReportController@showAdGroups'],
 
     ];
 }

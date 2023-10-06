@@ -41,7 +41,23 @@ class GetReportModel extends BaseModel
         if($result){
             return $result->fetch_assoc();
         } else {
-            // если отчет не найден report controller
+            return null;
+        }
+    }
+
+    public function getGroupsByCampaignId($tableName, $campaignId)
+    {
+        $campaignId = $this->db->getConnection()->real_escape_string($campaignId);
+        $sql = "SELECT * FROM $tableName WHERE n_Кампании = " . $campaignId;
+        $result = $this->db->getConnection()->query($sql);
+
+        $groups = [];
+        while ($row = $result->fetch_assoc()) {
+            $groups[] = $row;
+        }
+        if($groups){
+            return $groups;
+        } else {
             return null;
         }
     }

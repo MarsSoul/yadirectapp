@@ -8,6 +8,8 @@
 <?php
 //var_dump($campaigns);
 ?>
+
+
 <ul>
     <?php foreach($campaigns as $campaign_row) :
         $campaign = $campaign_row["campaign"];
@@ -27,9 +29,8 @@
             if(!empty($campaign_totals["Конверсии"])) : echo "КОНВЕРСИИ по кампании == " . $campaign_totals["Конверсии"] . "<br>"; endif;
             if(!empty($campaign_totals["Доход_руб"])) : echo "ДОХОД (руб) по кампании == " . $campaign_totals["Доход_руб"] . " ₽<br>"; endif;
 
-
             ?>
-
+            <a href="/adGroups/<?= $campaign['n_Кампании']?>/<?= $report['name_table_report']?>">Получить группы</a>
             <br><br>======================================<br><br>
 
         </li>
