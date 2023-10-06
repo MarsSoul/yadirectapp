@@ -74,8 +74,11 @@ class FormController extends BaseController
                     }
 
                     $columnNames = array_map(function($name) {
+                        $name = str_replace("№", "N", $name);
+                        $name = str_replace("%", "percent", $name);
                         $name = preg_replace('/[^\p{L}\p{N}\s]/u', '', $name);
                         $name = strtolower(preg_replace('/\s+/', '_', $name));
+
                         return $name;
                     }, $columnNames);
                     //                    var_dump($columnNames);

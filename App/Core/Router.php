@@ -26,8 +26,9 @@ class Router {
                 }
             }
         }
-        
-        echo "404";
+
+        http_response_code(404);
+        self::callAction('Error404Controller@index', ['Неправильный маршрут']);
     }
 
     private static function callAction($action, $params) {

@@ -25,6 +25,8 @@
                     ." | report name = ". $report['name_table_report'] ." | date create report ". $report['date_create_report'];
                 ?>
             </a>
+            |||||
+            <a href="/campaigns/<?php echo $report['id']; ?>">Показать кампании</a>
         </li>
     <?php endforeach; ?>
 </ul>

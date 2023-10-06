@@ -11,9 +11,12 @@
     <title>YADIRECTAPP</title>
 </head>
 
+<header>
+    <a href="/">HOME</a>
+</header>
 
 <body>
-<?php echo $content; ?>
+    <?php echo $content; ?>
 </body>
 
 
