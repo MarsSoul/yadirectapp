@@ -1,20 +1,17 @@
-<?php
-//var_dump($report);
-?>
-<h1><?= $report["date_start_report"] ;?> - <?= $report["date_end_report"] ;?></h1>
-<h1><?= $report["name_table_report"] ;?></h1>
+<h1>ADS IN GRPUPE: <?= $ads[0]["Группа"]; ?>  № GROUPE : <?= $ads[0]["n_Группы"]; ?></h1>
+
 
 <table>
     <thead>
         <tr>
             <?php
-                $titles = array_keys($report_data[0]);
+                $titles = array_keys($ads[0]);
                 foreach ($titles as $title) { echo "<th>{$title}</th>"; }
             ?>
         </tr>
     </thead>
     <tbody>
-        <?php foreach($report_data as $row) :
+        <?php foreach($ads as $row) :
             echo '<tr>';
                 foreach ($row as $value) {
                     echo "<td>{$value}</td>";

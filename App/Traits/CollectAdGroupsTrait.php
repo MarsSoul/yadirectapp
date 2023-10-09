@@ -27,6 +27,7 @@ trait CollectAdGroupsTrait
             'Уровень_платежеспособности'
         ];
 
+
         foreach ($report_data as $row) {
             $groupId = $row['n_Группы'];
 
@@ -34,6 +35,7 @@ trait CollectAdGroupsTrait
                 $adGroups[$groupId] = [
                     'group' => $row,
                     'totals' => [],
+                    'haveNigativeAd' => false,
                 ];
             }
 
@@ -50,9 +52,14 @@ trait CollectAdGroupsTrait
                         $adGroups[$groupId]['totals'][$field] += intval($value);
                     }
                 }
+
+                if ($field === "Конверсии") {
+                    if ($value == "0" || $value == "-") {
+                        $adGroups[$groupId]['haveNigativeAd'] = true;
+                    }
+                }
             }
         }
-
         return array_values($adGroups);
     }
 }

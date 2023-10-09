@@ -2,63 +2,104 @@
 
 namespace App\Models;
 
-// TODO report not found
 
 class GetReportModel extends BaseModel
 {
     public function getAllReports()
     {
-        $sql = "SELECT * FROM dates ORDER BY id DESC";
-        $result = $this->db->getConnection()->query($sql);
+        try {
+            $sql = "SELECT * FROM dates ORDER BY id DESC";
+            $result = $this->db->getConnection()->query($sql);
 
-        $reports = [];
-        while ($row = $result->fetch_assoc()) {
-            $reports[] = $row;
+            $reports = [];
+            while ($row = $result->fetch_assoc()) {
+                $reports[] = $row;
+            }
+
+            return $reports;
+        } catch (\Exception $e) {
+            return 'ошибка в базе: ' . $e->getMessage();
         }
-
-        return $reports;
     }
 
     public function getReportData($tableName)
     {
-        $sql = "SELECT * FROM $tableName";
-        $result = $this->db->getConnection()->query($sql);
+        try {
+            $sql = "SELECT * FROM $tableName";
+            $result = $this->db->getConnection()->query($sql);
 
-        $report_data = [];
-        while ($row = $result->fetch_assoc()) {
-            $report_data[] = $row;
+            $report_data = [];
+            while ($row = $result->fetch_assoc()) {
+                $report_data[] = $row;
+            }
+
+            return $report_data;
+        } catch (\Exception $e) {
+            return 'ошибка в базе: ' . $e->getMessage();
         }
-
-        return $report_data;
     }
 
     public function getReportById($id)
     {
-        $id = $this->db->getConnection()->real_escape_string($id);
-        $sql = "SELECT * FROM dates WHERE id = " . $id;
-        $result = $this->db->getConnection()->query($sql);
+        try {
+            $id = $this->db->getConnection()->real_escape_string($id);
+            $sql = "SELECT * FROM dates WHERE id = " . $id;
+            $result = $this->db->getConnection()->query($sql);
 
-        if($result){
-            return $result->fetch_assoc();
-        } else {
-            return null;
+            if($result){
+                return $result->fetch_assoc();
+            } else {
+                return null;
+            }
+        } catch (\Exception $e) {
+            return 'ошибка в базе: ' . $e->getMessage();
         }
     }
 
     public function getGroupsByCampaignId($tableName, $campaignId)
     {
-        $campaignId = $this->db->getConnection()->real_escape_string($campaignId);
-        $sql = "SELECT * FROM $tableName WHERE n_Кампании = " . $campaignId;
-        $result = $this->db->getConnection()->query($sql);
 
-        $groups = [];
-        while ($row = $result->fetch_assoc()) {
-            $groups[] = $row;
+        try {
+            $campaignId = $this->db->getConnection()->real_escape_string($campaignId);
+            $sql = "SELECT * FROM $tableName WHERE n_Кампании = " . $campaignId;
+            $result = $this->db->getConnection()->query($sql);
+            $groups = [];
+
+            while ($row = $result->fetch_assoc()) {
+                $groups[] = $row;
+            }
+
+            if($groups){
+                return $groups;
+            } else {
+                return null;
+            }
+        } catch (\Exception $e) {
+            return 'ошибка в базе: ' . $e->getMessage();
         }
-        if($groups){
-            return $groups;
-        } else {
-            return null;
+    }
+
+    public function getAdsByGroupAndCampaignId($tableName, $campaignId, $groupId)
+    {
+        try {
+            $campaignId = $this->db->getConnection()->real_escape_string($campaignId);
+            $groupId = $this->db->getConnection()->real_escape_string($groupId);
+            $sql = "SELECT * FROM $tableName WHERE n_Кампании = $campaignId AND n_Группы = $groupId";
+            $result = $this->db->getConnection()->query($sql);
+            $ads = [];
+
+            while ($row = $result->fetch_assoc()) {
+                $ads[] = $row;
+            }
+
+            if ($ads) {
+                return $ads;
+            } else {
+                return null;
+            }
+
+        } catch (\Exception $e) {
+            return 'ошибка в базе: ' . $e->getMessage();
         }
     }
 }

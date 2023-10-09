@@ -10,6 +10,11 @@ class BaseModel
 
     public function __construct()
     {
-        $this->db = new Database();
+//        $this->db = new Database();
+        try {
+            $this->db = new Database();
+        } catch (\Exception $e) {
+            die("Ошибка подключения к базе" . $e->getMessage());
+        }
     }
 }

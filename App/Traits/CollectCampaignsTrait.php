@@ -35,6 +35,7 @@ trait CollectCampaignsTrait
                 $campaigns[$campaign_id] = [
                     'campaign' => $row,
                     'totals' => [],
+                    'haveNigativeGroup' => false,
                 ];
             }
 
@@ -50,6 +51,11 @@ trait CollectCampaignsTrait
                         $campaigns[$campaign_id]['totals'][$field] = bcadd($campaigns[$campaign_id]['totals'][$field], $value, 2);
                     } else {
                         $campaigns[$campaign_id]['totals'][$field] += intval($value);
+                    }
+                }
+                if ($field === "Конверсии") {
+                    if ($value == 0 || $value == "-") {
+                        $campaigns[$campaign_id]['haveNigativeGroup'] = true;
                     }
                 }
             }

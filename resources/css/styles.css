@@ -6,3 +6,6 @@ th, td {
     border: 1px solid black;
     padding: 1em;
 }
+
+.color_red { color: crimson; }
+.color_yellow { color: darkorange; }
