@@ -10,16 +10,30 @@ class GetReportModel extends BaseModel
         try {
             $sql = "SELECT * FROM dates ORDER BY id DESC";
             $result = $this->db->getConnection()->query($sql);
-
             $reports = [];
+
             while ($row = $result->fetch_assoc()) {
-                $reports[] = $row;
+                $tableName = $row['name_table_report'];
+
+                if ($this->tableExists($tableName)) {
+                    $reports[] = $row;
+                } else {
+                    return 'Not found reports';
+                }
             }
 
             return $reports;
         } catch (\Exception $e) {
             return 'ошибка в базе: ' . $e->getMessage();
         }
+    }
+
+    private function tableExists($tableName)
+    {
+        $sql = "SHOW TABLES LIKE '$tableName'";
+        $result = $this->db->getConnection()->query($sql);
+
+        return $result->num_rows > 0;
     }
 
     public function getReportData($tableName)

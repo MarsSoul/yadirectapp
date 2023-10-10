@@ -2,14 +2,12 @@
 
 namespace App\Traits;
 
-use App\Controllers\Error404Controller;
 
 trait CollectAdGroupsTrait
 {
     protected function collectAdGroups($report_data)
     {
         $adGroups = [];
-//        $skip_fields = ['n_Группы',];
         $skip_fields = [
             'id',
             'Логин_клиента',

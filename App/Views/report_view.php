@@ -1,6 +1,3 @@
-<?php
-//var_dump($report);
-?>
 <h1><?= $report["date_start_report"] ;?> - <?= $report["date_end_report"] ;?></h1>
 <h1><?= $report["name_table_report"] ;?></h1>
 
