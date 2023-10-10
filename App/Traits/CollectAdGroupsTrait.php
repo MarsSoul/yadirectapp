@@ -25,6 +25,13 @@ trait CollectAdGroupsTrait
             'Уровень_платежеспособности'
         ];
 
+        $average_fields = [
+            'Ср_цена_клика_руб',
+            'Ср_позиция_показов',
+            'Ср_объём_трафика',
+            'Ср_позиция_кликов',
+            'Глубина_стр',
+        ];
 
         foreach ($report_data as $row) {
             $groupId = $row['n_Группы'];
@@ -34,6 +41,8 @@ trait CollectAdGroupsTrait
                     'group' => $row,
                     'totals' => [],
                     'haveNigativeAd' => false,
+                    'groupeRows' => 0,
+                    'listNigativeAd' => [],
                 ];
             }
 
@@ -44,20 +53,36 @@ trait CollectAdGroupsTrait
                         $adGroups[$groupId]['totals'][$field] = 0;
                     }
 
-                    if (is_numeric($value)) {
-                        $adGroups[$groupId]['totals'][$field] += $value;
+                    if (in_array($field, $average_fields)) {
+                        $adGroups[$groupId]['totals'][$field] += is_numeric($value) ? $value : 0;
+
                     } else {
-                        $adGroups[$groupId]['totals'][$field] += intval($value);
+                        if (is_numeric($value)) {
+                            $adGroups[$groupId]['totals'][$field] += $value;
+                        } else {
+                            $adGroups[$groupId]['totals'][$field] += intval($value);
+                        }
                     }
                 }
 
                 if ($field === "Конверсии") {
                     if ($value == "0" || $value == "-") {
                         $adGroups[$groupId]['haveNigativeAd'] = true;
+                        $adGroups[$groupId]['listNigativeAd'][] = $row;
                     }
                 }
             }
+            $adGroups[$groupId]['groupeRows']++;
         }
+
+        foreach ($adGroups as &$adGroup) {
+            foreach ($average_fields as $field) {
+                if (isset($adGroup['totals'][$field])) {
+                    $adGroup['totals'][$field] = round($adGroup['totals'][$field] / $adGroup['groupeRows'], 3);
+                }
+            }
+        }
+
         return array_values($adGroups);
     }
 }

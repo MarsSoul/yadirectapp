@@ -28,6 +28,15 @@ trait CollectCampaignsTrait
             'Уровень_платежеспособности'
         ];
 
+        $average_fields = [
+            'Ср_цена_клика_руб',
+            'Ср_позиция_показов',
+            'Ср_объём_трафика',
+            'Ср_позиция_кликов',
+            'Глубина_стр',
+        ];
+//        var_dump($report_data);
+//        die();
         foreach ($report_data as $row) {
             $campaign_id = $row['n_Кампании'];
 
@@ -36,6 +45,7 @@ trait CollectCampaignsTrait
                     'campaign' => $row,
                     'totals' => [],
                     'haveNigativeGroup' => false,
+                    'campaignRows' => 0,
                 ];
             }
 
@@ -47,16 +57,30 @@ trait CollectCampaignsTrait
                         $campaigns[$campaign_id]['totals'][$field] = 0;
                     }
 
-                    if (is_numeric($value)) {
-                        $campaigns[$campaign_id]['totals'][$field] = bcadd($campaigns[$campaign_id]['totals'][$field], $value, 2);
+                    if (in_array($field, $average_fields)) {
+                        $campaigns[$campaign_id]['totals'][$field] += is_numeric($value) ? $value : 0;
+
                     } else {
-                        $campaigns[$campaign_id]['totals'][$field] += intval($value);
+                        if (is_numeric($value)) {
+                            $campaigns[$campaign_id]['totals'][$field] = bcadd($campaigns[$campaign_id]['totals'][$field], $value, 2);
+                        } else {
+                            $campaigns[$campaign_id]['totals'][$field] += intval($value);
+                        }
                     }
                 }
                 if ($field === "Конверсии") {
                     if ($value == 0 || $value == "-") {
                         $campaigns[$campaign_id]['haveNigativeGroup'] = true;
                     }
+                }
+            }
+            $campaigns[$campaign_id]['campaignRows']++;
+        }
+
+        foreach ($campaigns as &$campaign) {
+            foreach ($average_fields as $field) {
+                if (isset($campaign['totals'][$field])) {
+                    $campaign['totals'][$field] = round($campaign['totals'][$field] / $campaign['campaignRows'], 3);
                 }
             }
         }
@@ -70,5 +94,10 @@ trait CollectCampaignsTrait
         }
         return array_values($campaigns);
     }
-
 }
+
+    //Ср_цена_клика_руб
+    //Ср_позиция_показов
+    //Ср_объём_трафика
+    //Ср_позиция_кликов
+    //Глубина_стр
