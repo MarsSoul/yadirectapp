@@ -1,4 +1,4 @@
-<h1>ADS IN GRPUPE: <?= $ads[0]["Группа"]; ?>  № GROUPE : <?= $ads[0]["n_Группы"]; ?></h1>
+<h1>ПОИСКОВЫЕ ЗАПРОСЫ IN GRPUPE: <?= $ads[0]["Группа"]; ?>  № GROUPE : <?= $ads[0]["n_Группы"]; ?></h1>
 
 <table>
     <thead>

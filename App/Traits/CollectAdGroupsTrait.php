@@ -65,12 +65,36 @@ trait CollectAdGroupsTrait
                     }
                 }
 
-                if ($field === "Конверсии") {
-                    if ($value == "0" || $value == "-") {
-                        $adGroups[$groupId]['haveNigativeAd'] = true;
-                        $adGroups[$groupId]['listNigativeAd'][] = $row;
-                    }
-                }
+//                if ($field === "Конверсии") {
+//
+//                    if ($value == "0" || $value == "-") {
+//                        $adGroups[$groupId]['haveNigativeAd'] = true;
+////                        $adGroups[$groupId]['listNigativeAd'][] = $row;
+
+//                    }
+//                }
+
+// ==========
+if ($field === "Конверсии") {
+    $adId = $row['n_Объявления'];
+
+    if (!isset($adGroups[$groupId]['listNigativeAd'][$adId])) {
+        $adGroups[$groupId]['listNigativeAd'][$adId] = [
+            'rows' => [],
+            'isAdNigative' => true // изначально нигативное
+        ];
+    }
+
+    if ($value != "0" && $value != "-") {
+        $adGroups[$groupId]['listNigativeAd'][$adId]['isAdNigative'] = false;
+
+    }
+    else {
+        $adGroups[$groupId]['listNigativeAd'][$adId]['rows'][] = $row;
+        $adGroups[$groupId]['haveNigativeAd'] = true;
+    }
+}
+// ==========
             }
             $adGroups[$groupId]['groupeRows']++;
         }

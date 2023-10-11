@@ -20,8 +20,6 @@ class UploadReportModel extends BaseModel
         ";
 
         foreach ($columns as $column) {
-    //        $sql .= $column . " TEXT, ";
-    //        $sql .= "`" . $column . "` TEXT, ";
             if ($column != '') {
                 $sql .= "`" . $column . "` TEXT, ";
             } else {
@@ -37,13 +35,6 @@ class UploadReportModel extends BaseModel
     // insert table report
     public function insertReportData($tableName, $rowData, $columns)
     {
-    //    var_dump($rowData);
-    //    die();
-    //    if (count($rowData) != count($columns))
-    //    {
-    //        echo "$rowData: ". count($rowData)."<br>";
-    //        echo "$columns: ". count($columns)."<br>";
-    //    }
         $placeholders = implode(',', array_fill(0, count($rowData), '?'));
         $columnNames = implode(',', $columns);
         $sql = "INSERT INTO $tableName 
@@ -70,8 +61,6 @@ class UploadReportModel extends BaseModel
     public function addReportInfo($tableName, $dates)
     {
         $date_create = date("Y-m-d"); // current date
-//        $date_start = DateTime::createFromFormat('Y_m_d', $dates[0])->format('Y-m-d');
-//        $date_end = DateTime::createFromFormat('Y_m_d', $dates[1])->format('Y-m-d');
         $date_start_obj = DateTime::createFromFormat('Y_m_d', $dates[0]);
         if ($date_start_obj === false) { $date_start = '0000-00-00';}
         else { $date_start = $date_start_obj->format('Y-m-d'); }

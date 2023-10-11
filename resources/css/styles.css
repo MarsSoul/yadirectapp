@@ -9,3 +9,5 @@ th, td {
 
 .color_red { color: crimson; }
 .color_yellow { color: darkorange; }
+.color_green { color: green; }
+.tabul { padding-left: 5em; border-left: inset; }

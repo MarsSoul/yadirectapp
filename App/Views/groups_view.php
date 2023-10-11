@@ -8,23 +8,48 @@ foreach ($adGroups as $group_row):
     $group_totals = $group_row["totals"];
     ?>
     <li>
-        <?php var_dump($group["n_Группы"]); ?><br><br>
-        <?php var_dump($group["Группа"]); ?><br><br>
+
+        <h2 class="color_green">НОМЕР ГРУППЫ = <?php print_r($group["n_Группы"]); ?> ||| НАЗВАНИЕ ГРУППЫ = <?php print_r($group["Группа"]); ?></h2>
 
 
         <?php
-            if($group_row["haveNigativeAd"] === true) : echo "<p class='color_yellow'>(!) В ЭТОЙ ГРУППЕ ЕСТЬ НИГАТИВНОЕ ОБЪЯВЛЕНИЕ</p>";
+            if($group_row["haveNigativeAd"] === true) : echo "<p class='color_yellow'>(!) В ЭТОЙ ГРУППЕ ЕСТЬ НИГАТИВНЫЕ ЗАПРОСЫ</p>";
 
-                echo "<p class='color_yellow'>СПИСОК НИГАТИВНЫХ:</p>";
+                echo "<div class='tabul'>";
+                    echo "<p class='color_yellow'>СПИСОК НИГАТИВНЫХ ОБЪЯВЛЕНИЙ:</p>";
+
+                    foreach ($group_row["listNigativeAd"] as $adId => $negativeAds) {
+                        echo "<strong class='color_green'>Номер объявления: " . $negativeAds["rows"][0]["n_Объявления"] . "</strong>";
+                    //    var_dump($negativeAds["rows"][0]["n_Объявления"]);
+    //                    var_dump($negativeAds["adniga"]);
+                        if($negativeAds["isAdNigative"] === true) :
+                            echo "<strong class='color_red'>   (!) ВСЕ ЭТО ОБЪЯВЛЕНИЕ НИГАТИВНОЕ (во всех поисковых запросах конверсия = 0)</strong>";
+                        endif;
+
+                        echo "<br>";
+                        echo "<br>";
+
+
+                        echo "<div class='color_red'>";
+
+
+                            echo "<div class='tabul'>";
+
+                                echo "<p class='color_yellow'>СПИСОК НИГАТИВНЫХ ПОСИКОВЫХ ЗАПРОСОВ:</p>";
+                                foreach ($negativeAds["rows"] as $nigativeAd) {
+
+                                    echo "* строка в отчете: " . $nigativeAd["id"] .
+                                        " - поисковый запрос: <strong>" . $nigativeAd["Поисковый_запрос"] . "</strong>" .
+                                        " - номер объявления: " . $nigativeAd["n_Объявления"] . "<br>";
+                                }
+                            echo "</div>"; // tabul
+                        echo "</div>"; // color red list search queries
+
+                        echo "<br>";
+                        echo "<br>";
+                    }
+                echo "</div>"; // tabul
             endif;
-
-            echo "<div class='color_red'>";
-                foreach ($group_row["listNigativeAd"] as $nigativeAd):
-                    echo "* строка в отчете: " . $nigativeAd["id"] .
-                        " - поисковый запрос: " . $nigativeAd["Поисковый_запрос"] .
-                        " - номер объявления: " . $nigativeAd["n_Объявления"];
-                endforeach;
-            echo "</div>";
             echo "<br>";
         ?>
 
@@ -50,8 +75,10 @@ foreach ($adGroups as $group_row):
         ?>
         <br>
         <br>
-        <a href="/ads/<?= $adGroups[0]["group"]["n_Кампании"] ?>/<?= $group["n_Группы"] ?>/<?= $table_name ?>"  target="_blank">Показать объявления</a>
-        <br><br>======================================<br><br>
+        <a href="/ads/<?= $adGroups[0]["group"]["n_Кампании"] ?>/<?= $group["n_Группы"] ?>/<?= $table_name ?>"  target="_blank">Показать все запросы</a>
+
+        <br><br>============================================================================================================================================================================================================<br><br>
+
     </li>
 <?php endforeach; ?>
 </ul>

@@ -81,7 +81,7 @@ class ReportController extends BaseController
         $data = [
             'ads' => $ads
         ];
-        $this->renderView('ads_view', $data);
+        $this->renderView('search_queries_view', $data);
     }
 
 }
