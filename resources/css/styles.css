@@ -2,6 +2,7 @@ table {
     border-collapse: collapse;
     width: 100%;
 }
+
 th, td {
     border: 1px solid black;
     padding: 1em;
@@ -10,4 +11,28 @@ th, td {
 .color_red { color: crimson; }
 .color_yellow { color: darkorange; }
 .color_green { color: green; }
-.tabul { padding-left: 5em; border-left: inset; }
+
+.tabul {
+    padding-left: 5em;
+    border-left: inset;
+}
+
+.accordion-item { /*pass*/ }
+
+.accordion-header { cursor: pointer; }
+
+.accordion-content { display: none; }
+
+.sotr-titles:hover {
+    cursor: pointer;
+    color: green;
+    position: relative;
+}
+
+.sotr-titles-info { display: none; }
+
+.sotr-titles:hover .sotr-titles-info {
+    display: block;
+    position: absolute;
+    top: -1.5em;
+}

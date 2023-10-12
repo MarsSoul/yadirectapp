@@ -6,7 +6,12 @@
         <tr>
             <?php
                 $titles = array_keys($report_data[0]);
-                foreach ($titles as $title) { echo "<th>{$title}</th>"; }
+                foreach ($titles as $title) {
+                    echo "<th data-order='asc' class='sotr-titles'>
+                        {$title}
+                        <div class='sotr-titles-info'>sort me</div>
+                    </th>";
+                }
             ?>
         </tr>
     </thead>
