@@ -8,6 +8,9 @@
 </h2>
 
 <ul>
+    <?php
+//    var_dump($campaigns);
+    ?>
     <?php foreach($campaigns as $campaign_row) :
         $campaign = $campaign_row["campaign"];
         $campaign_totals = $campaign_row["totals"];

@@ -39,7 +39,7 @@ trait CollectCampaignsTrait
 //        die();
         foreach ($report_data as $row) {
             $campaign_id = $row['n_Кампании'];
-
+//            var_dump($row);
             if (!isset($campaigns[$campaign_id])) {
                 $campaigns[$campaign_id] = [
                     'campaign' => $row,
@@ -92,6 +92,7 @@ trait CollectCampaignsTrait
             $error404->index("Нет кампаний в отчете");
             die();
         }
+
         return array_values($campaigns);
     }
 }

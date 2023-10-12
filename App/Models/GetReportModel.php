@@ -37,21 +37,37 @@ class GetReportModel extends BaseModel
     }
 
     public function getReportData($tableName)
+//    public function getReportData($tableName, $pageNumber = 1, $pageSize) // pagg
     {
         try {
             $sql = "SELECT * FROM $tableName";
+//            $start = ($pageNumber) * $pageSize;  // pagg
+//            $sql = "SELECT * FROM $tableName LIMIT $start, $pageSize";  // pagg
+
             $result = $this->db->getConnection()->query($sql);
 
             $report_data = [];
             while ($row = $result->fetch_assoc()) {
                 $report_data[] = $row;
             }
-
+//            var_dump($report_data);
             return $report_data;
         } catch (\Exception $e) {
             return 'ошибка в базе: ' . $e->getMessage();
         }
     }
+
+//    public function totalRowsInTable($tableName)  // pagg
+//    {
+//        $sql = "SELECT COUNT(*) FROM $tableName";
+//        $result = $this->db->getConnection()->query($sql);
+//
+//        if($result){
+//            return $result->fetch_row()[0];
+//        } else {
+//            return null;
+//        }
+//    }
 
     public function getReportById($id)
     {

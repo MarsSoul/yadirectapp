@@ -5,17 +5,31 @@
         <tr>
             <?php
                 $titles = array_keys($ads[0]);
-                foreach ($titles as $title) { echo "<th>{$title}</th>"; }
+                foreach ($titles as $title) {
+//                    echo "<th>{$title}</th>";
+                    echo "<th data-order='asc' class='sotr-titles'>
+                        {$title}
+                        <div class='sotr-titles-info'>sort me</div>
+                    </th>";
+                }
             ?>
         </tr>
     </thead>
     <tbody>
         <?php foreach($ads as $row) :
-            echo '<tr>';
-                foreach ($row as $value) {
-                    echo "<td>{$value}</td>";
-                }
+//            var_dump($row["Конверсии"]);
+            $backgroundNigativeConverion = '';
+
+            if ($row["Конверсии"] == "0" || $row["Конверсии"] == "-") {
+                $backgroundNigativeConverion = 'backgrn_color_red';
+            }
+            echo '<tr class="' . $backgroundNigativeConverion . '">';
+            foreach ($row as $value) {
+                echo "<td>{$value}</td>";
+            }
             echo '</tr>';
+
+
         endforeach; ?>
     </tbody>
 </table>

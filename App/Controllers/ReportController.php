@@ -11,7 +11,6 @@ use App\Models\GetReportModel;
 // TODO interfe
 // TODO err
 // TODO comm
-// TODO if ($field !== 'n_Кампании') {  --- среддняя должна счиаться \\ Взвешенные_показы CTR wCTR Отказы_percent Глубина_стр Конверсия_percent Цена_цели_руб узнать что это
 
 class ReportController extends BaseController
 {
@@ -23,9 +22,32 @@ class ReportController extends BaseController
         $data = [
             'report_data' => $report_data,
             'report' => $report,
-            ];
+        ];
         $this->renderView('report_view', $data);
     }
+
+//    pagg del list files :
+//        reportcontroller  showReport
+//        reportdatatrait  getReportAndData
+//        reportview
+//        routes
+//        getreportmodel  getReportData  totalRowsInTable
+
+//    public function showReport($id,  $pageNumber = null) // pagg
+//    {
+////        $pageSize = 50;
+//        $pageSize = ($pageNumber === 'all') ? PHP_INT_MAX : 50;
+//        $pageNumber = ($pageNumber === 'all') ? null : $pageNumber;
+//
+//        list($report, $report_data, $totalPages) = $this->getReportAndData($id, $pageNumber, $pageSize);
+//        $data = [
+//            'report_data' => $report_data,
+//            'report' => $report,
+//            'total_pages' => $totalPages,
+//            'current_page' => $pageNumber ?? 1,
+//        ];
+//        $this->renderView('report_view', $data);
+//    }
 
     public function showCampaigns($id)
     {

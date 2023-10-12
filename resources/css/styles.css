@@ -12,6 +12,8 @@ th, td {
 .color_yellow { color: darkorange; }
 .color_green { color: green; }
 
+.backgrn_color_red { background-color: #ed143d40; }
+
 .tabul {
     padding-left: 5em;
     border-left: inset;
