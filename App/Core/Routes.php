@@ -14,8 +14,5 @@ class Routes {
         ['GET', '/campaigns/([0-9]+)', 'ReportController@showCampaigns'],
         ['GET', '/adGroups/([0-9]+)/([^/]+)', 'ReportController@showAdGroups'],
         ['GET', '/ads/([0-9]+)/([0-9]+)/([^/]+)', 'ReportController@showAds'],
-//
-//        ['GET', '/report/([0-9]+)/([0-9]*)', 'ReportController@showReport'], // pagg
-//        ['GET', '/report/([0-9]+)/(all|[0-9]*)', 'ReportController@showReport'],  // pagg (not pagg)
     ];
 }

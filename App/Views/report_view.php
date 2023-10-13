@@ -5,14 +5,19 @@
 <br>
 <br>
 
-<!--<div>-->
-<!--    <a href="/report/--><?php //= $report["id"] ?><!--/all">ВЫВЕСТИ БЕЗ ПАГИНАЦИИ</a>-->
-<!--</div>-->
-<!--<br>-->
-<!--<br>-->
+<div id="loader" class="loader">
+    <div class="loader-text">
+        Идет прогрузка отчета в отчете <?php echo count($report_data); ?> строки
+    </div>
+</div>
 
+<label for="itemsPerPage">Пагинировать по :</label>
+<input type="number" id="itemsPerPage" min="1" value="50">
+<button id="updatePerPage">применить</button>
+<br>
+<br>
 
-<table>
+<table id="reportTable">
     <thead>
         <tr>
             <?php
@@ -35,23 +40,13 @@
                 }
             echo '</tr>';
         endforeach; ?>
-
     </tbody>
 </table>
 
-<!--pagg start-->
-<?php
-////print_r($total_pages);
-//?>
-<?php
-//if ($total_pages > 1) :
-//    for ($i = 1; $i <= $total_pages; $i++) : ?>
-<!--        <div class="page-item--><?php //= ($current_page == $i) ? ' active' : '' ?><!--">-->
-<!--            <a class="page-link" href="/report/--><?php //= $report["id"] ?><!--/--><?php //= $i-1 ?><!--">--><?php //= $i ?><!--</a>-->
-<!--        </div>-->
-<?php
-//    endfor;
-//endif;
-//?>
-
-<!--pad end-->
+<div id="pagination">
+    <button id="firstPage">Первая</button>
+    <button id="prevPage"><<</button>
+    <button id="nextPage">>></button>
+    <button id="lastPage">Последняя</button>
+</div>
+<script>const reportData = <?= json_encode($report_data); ?>;</script>

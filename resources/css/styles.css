@@ -38,3 +38,19 @@ th, td {
     position: absolute;
     top: -1.5em;
 }
+
+.loader {
+    background-color: #19191a7d;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    z-index: 99;
+}
+
+.loader-text {
+    font-size: 10em;
+    color: aliceblue;
+    z-index: 100;
+}

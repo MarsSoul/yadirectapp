@@ -21,7 +21,9 @@
 
 
 <footer>
-     <script type="text/javascript" src="/resources/javascript/js.js"></script>
+    <script type="text/javascript" src="/resources/javascript/js-loader.js"></script>
+    <script type="text/javascript" src="/resources/javascript/js.js"></script>
     <script type="text/javascript" src="/resources/javascript/js-sort.js"></script>
+    <script type="text/javascript" src="/resources/javascript/js-paggination.js"></script>
 </footer>
 </html>
