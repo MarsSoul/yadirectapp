@@ -49,6 +49,8 @@
                 </a>
                 |||||
                 <a href="/campaigns/<?php echo $report['id']; ?>" target="_blank">Показать кампании</a>
+                |||||
+                <a href="/report/delete/<?php echo $report['id']; ?>/<?php echo $report['name_table_report']; ?>" class="color_red"> (!) Удалить отчет</a>
             </li>
         <?php endforeach; ?>
     </ul>

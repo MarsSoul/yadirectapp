@@ -17,4 +17,13 @@ class BaseModel
             die("Ошибка подключения к базе" . $e->getMessage());
         }
     }
+
+    public function tableExists($tableName)
+    {
+        $tableName = $this->db->getConnection()->real_escape_string($tableName);
+        $sql = "SHOW TABLES LIKE '$tableName'";
+        $result = $this->db->getConnection()->query($sql);
+
+        return $result->num_rows > 0;
+    }
 }

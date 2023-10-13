@@ -9,7 +9,11 @@ class GetReportModel extends BaseModel
     {
         try {
             $sql = "SELECT * FROM dates ORDER BY id DESC";
-            $result = $this->db->getConnection()->query($sql);
+//            $result = $this->db->getConnection()->query($sql);
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
             $reports = [];
 
             while ($row = $result->fetch_assoc()) {
@@ -28,20 +32,22 @@ class GetReportModel extends BaseModel
         }
     }
 
-    private function tableExists($tableName)
-    {
-        $sql = "SHOW TABLES LIKE '$tableName'";
-        $result = $this->db->getConnection()->query($sql);
-
-        return $result->num_rows > 0;
-    }
+//    private function tableExists($tableName)
+//    {
+//        $sql = "SHOW TABLES LIKE '$tableName'";
+//        $result = $this->db->getConnection()->query($sql);
+//
+//        return $result->num_rows > 0;
+//    }
 
     public function getReportData($tableName)
     {
         try {
             $sql = "SELECT * FROM $tableName";
-
-            $result = $this->db->getConnection()->query($sql);
+//            $result = $this->db->getConnection()->query($sql);
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
             $report_data = [];
             while ($row = $result->fetch_assoc()) {
@@ -57,15 +63,22 @@ class GetReportModel extends BaseModel
     public function getReportById($id)
     {
         try {
-            $id = $this->db->getConnection()->real_escape_string($id);
-            $sql = "SELECT * FROM dates WHERE id = " . $id;
-            $result = $this->db->getConnection()->query($sql);
+//            $id = $this->db->getConnection()->real_escape_string($id);
+//            $sql = "SELECT * FROM dates WHERE id = " . $id;
+//            $result = $this->db->getConnection()->query($sql);
+//
+//            if($result){
+//                return $result->fetch_assoc();
+//            } else {
+//                return null;
+//            }
+            $sql = "SELECT * FROM dates WHERE id = ?";
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-            if($result){
-                return $result->fetch_assoc();
-            } else {
-                return null;
-            }
+            return $result->fetch_assoc() ?? null;
         } catch (\Exception $e) {
             return 'ошибка в базе: ' . $e->getMessage();
         }
@@ -73,11 +86,16 @@ class GetReportModel extends BaseModel
 
     public function getGroupsByCampaignId($tableName, $campaignId)
     {
-
         try {
-            $campaignId = $this->db->getConnection()->real_escape_string($campaignId);
-            $sql = "SELECT * FROM $tableName WHERE n_Кампании = " . $campaignId;
-            $result = $this->db->getConnection()->query($sql);
+//            $campaignId = $this->db->getConnection()->real_escape_string($campaignId);
+//            $sql = "SELECT * FROM $tableName WHERE n_Кампании = " . $campaignId;
+//            $result = $this->db->getConnection()->query($sql);
+            $sql = "SELECT * FROM $tableName WHERE n_Кампании = ?";
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->bind_param('s', $campaignId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
             $groups = [];
 
             while ($row = $result->fetch_assoc()) {
@@ -97,10 +115,17 @@ class GetReportModel extends BaseModel
     public function getAdsByGroupAndCampaignId($tableName, $campaignId, $groupId)
     {
         try {
-            $campaignId = $this->db->getConnection()->real_escape_string($campaignId);
-            $groupId = $this->db->getConnection()->real_escape_string($groupId);
-            $sql = "SELECT * FROM $tableName WHERE n_Кампании = $campaignId AND n_Группы = $groupId";
-            $result = $this->db->getConnection()->query($sql);
+//            $campaignId = $this->db->getConnection()->real_escape_string($campaignId);
+//            $groupId = $this->db->getConnection()->real_escape_string($groupId);
+//            $sql = "SELECT * FROM $tableName WHERE n_Кампании = $campaignId AND n_Группы = $groupId";
+//            $result = $this->db->getConnection()->query($sql);
+
+            $sql = "SELECT * FROM $tableName WHERE n_Кампании = ? AND n_Группы = ?";
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->bind_param('ss', $campaignId, $groupId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
             $ads = [];
 
             while ($row = $result->fetch_assoc()) {
