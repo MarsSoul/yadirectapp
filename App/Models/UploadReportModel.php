@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use App\Interfaces\Models\UploadReportModelInterface;
 use DateTime;
 
 // TODO DRY , clean , naming
-// TODO interfe
 // TODO trait
 // TODO err
 // TODO comm
 
-class UploadReportModel extends BaseModel
+class UploadReportModel extends BaseModel implements UploadReportModelInterface
 {
     // create table report
     public function createTable($tableName, $columns)
@@ -46,7 +46,8 @@ class UploadReportModel extends BaseModel
     }
 
     // for equal row in db and file
-    public function getRowCount($tableName) {
+    public function getRowCount($tableName)
+    {
         $query = "SELECT COUNT(*) AS count FROM " . $tableName;
         $result = $this->db->getConnection()->query($query);
 
@@ -79,7 +80,8 @@ class UploadReportModel extends BaseModel
 
     // for clear db (каждый раз когда добавляется новый отчет в Controllers/FormController.php вызывается чистильщик)
     // если таблицы с отчетом нет, то удаляется запись из dates
-    public function cleanReportTables() {
+    public function cleanReportTables()
+    {
         $result = $this->db->getConnection()->query('SHOW TABLES');
         $tables = [];
         while ($row = $result->fetch_array()) {

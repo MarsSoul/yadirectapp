@@ -43,6 +43,7 @@ trait CollectAdGroupsTrait
                     'haveNigativeAd' => false,
                     'groupeRows' => 0,
                     'listNigativeAd' => [],
+                    'PPAGroupe' => 0,
                 ];
             }
 
@@ -65,36 +66,28 @@ trait CollectAdGroupsTrait
                     }
                 }
 
-//                if ($field === "Конверсии") {
-//
-//                    if ($value == "0" || $value == "-") {
-//                        $adGroups[$groupId]['haveNigativeAd'] = true;
-////                        $adGroups[$groupId]['listNigativeAd'][] = $row;
+            // ==========
+            if ($field === "Конверсии") {
+                $adId = $row['n_Объявления'];
 
-//                    }
-//                }
+                if (!isset($adGroups[$groupId]['listNigativeAd'][$adId])) {
+                    $adGroups[$groupId]['listNigativeAd'][$adId] = [
+                        'rows' => [],
+                        'isAdNigative' => true // изначально нигативное
+                    ];
+                }
 
-// ==========
-if ($field === "Конверсии") {
-    $adId = $row['n_Объявления'];
+                if ($value != "0" && $value != "-") {
+                    $adGroups[$groupId]['listNigativeAd'][$adId]['isAdNigative'] = false;
+                }
+                else {
+                    $adGroups[$groupId]['listNigativeAd'][$adId]['rows'][] = $row;
+                    $adGroups[$groupId]['haveNigativeAd'] = true;
+                }
 
-    if (!isset($adGroups[$groupId]['listNigativeAd'][$adId])) {
-        $adGroups[$groupId]['listNigativeAd'][$adId] = [
-            'rows' => [],
-            'isAdNigative' => true // изначально нигативное
-        ];
-    }
+            }
 
-    if ($value != "0" && $value != "-") {
-        $adGroups[$groupId]['listNigativeAd'][$adId]['isAdNigative'] = false;
-
-    }
-    else {
-        $adGroups[$groupId]['listNigativeAd'][$adId]['rows'][] = $row;
-        $adGroups[$groupId]['haveNigativeAd'] = true;
-    }
-}
-// ==========
+                // ==========
             }
             $adGroups[$groupId]['groupeRows']++;
         }
@@ -104,6 +97,10 @@ if ($field === "Конверсии") {
                 if (isset($adGroup['totals'][$field])) {
                     $adGroup['totals'][$field] = round($adGroup['totals'][$field] / $adGroup['groupeRows'], 3);
                 }
+            }
+            if ($adGroup['totals']["Конверсии"] != "0.00" && $adGroup['totals']["Конверсии"] != 0.00 && $adGroup['totals']["Конверсии"] != "-") {
+                $adGroup['PPAGroupe'] = $adGroup['totals']["Расход_руб"] / $adGroup['totals']["Конверсии"];
+                $adGroup['PPAGroupe'] = round($adGroup['PPAGroupe'] , 2);
             }
         }
 

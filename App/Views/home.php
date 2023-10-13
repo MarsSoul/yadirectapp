@@ -30,7 +30,7 @@
 <br><br>
 <form action="/uploadReport" method="POST" enctype="multipart/form-data">
     <input type="file" name="xlsx_file">
-    <input type="submit" value="zagruzit">
+    <input type="submit" value="Загрузить отчет">
 </form>
 
 <pre>=============================================================================================================</pre>

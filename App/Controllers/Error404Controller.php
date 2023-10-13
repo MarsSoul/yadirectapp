@@ -2,9 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Interfaces\Controllers\Error404ControllerInterface;
 use App\Core\View;
 
-class Error404Controller extends BaseController
+class Error404Controller extends BaseController implements Error404ControllerInterface
 {
     public function index($message)
     {

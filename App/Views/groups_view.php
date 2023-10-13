@@ -40,43 +40,49 @@ foreach ($adGroups as $group_row):
         //                    echo "<p class='color_yellow'>СПИСОК НИГАТИВНЫХ ОБЪЯВЛЕНИЙ:</p>";
 
                             foreach ($group_row["listNigativeAd"] as $adId => $negativeAds) {
-                                echo "<strong class='color_green'>Номер объявления: " . $negativeAds["rows"][0]["n_Объявления"] . "</strong>";
+                                if (count($negativeAds["rows"]) !== 0 ){
+                                    echo "<strong class='color_green'>Номер объявления: " . $negativeAds["rows"][0]["n_Объявления"] . "</strong>";
 
-                                if($negativeAds["isAdNigative"] === true) :
-                                    echo "<strong class='color_red'>   (!) ВСЕ ЭТО ОБЪЯВЛЕНИЕ НИГАТИВНОЕ (во всех поисковых запросах конверсия = 0)</strong>";
-                                endif;
+                                    if($negativeAds["isAdNigative"] === true) :
+                                        echo "<strong class='color_red'>   (!) ВСЕ ЭТО ОБЪЯВЛЕНИЕ НИГАТИВНОЕ (во всех поисковых запросах конверсия = 0)</strong>";
+                                    endif;
 
-                                echo "<br>";
-                                echo "<br>";
+                                    echo "<br>";
+                                    echo "<br>";
 
-                                echo "<div class='color_red'>";
-                                    echo "<div class='tabul'>";
-                                        ?>
-                                        <div class="accordion">
-                                            <div class="accordion-item">
-                                                <div class="accordion-header"><p class='color_yellow'>СПИСОК НИГАТИВНЫХ ПОСИКОВЫХ ЗАПРОСОВ: 🢃показать🢃</p></div>
+                                    echo "<div class='color_red'>";
+                                        echo "<div class='tabul'>";
+                                            ?>
+                                            <div class="accordion">
+                                                <div class="accordion-item">
+                                                    <div class="accordion-header"><p class='color_yellow'>СПИСОК НИГАТИВНЫХ ПОСИКОВЫХ ЗАПРОСОВ: 🢃показать🢃</p></div>
 
-                                                <div class="accordion-content">
+                                                    <div class="accordion-content">
 
-                                                    <?php
-                    //                                echo "<p class='color_yellow'>СПИСОК НИГАТИВНЫХ ПОСИКОВЫХ ЗАПРОСОВ:</p>";
-                                                    foreach ($negativeAds["rows"] as $nigativeAd) {
+                                                        <?php
+                        //                                echo "<p class='color_yellow'>СПИСОК НИГАТИВНЫХ ПОСИКОВЫХ ЗАПРОСОВ:</p>";
+//                                                        var_dump($negativeAds);
+//                                                        echo "<br>";
+//                                                        var_dump($negativeAds["rows"]);
+                                                        foreach ($negativeAds["rows"] as $nigativeAd) {
 
-                                                        echo "* строка в отчете: " . $nigativeAd["id"] .
-                                                            " - поисковый запрос: <strong>" . $nigativeAd["Поисковый_запрос"] . "</strong>" .
-                                                            " - номер объявления: " . $nigativeAd["n_Объявления"] . "<br>";
-                                                    }
-                                                    echo "</div>"; // tabul
-                                                    ?>
+                                                            echo "* строка в отчете: " . $nigativeAd["id"] .
+                                                                " - поисковый запрос: <strong>" . $nigativeAd["Поисковый_запрос"] . "</strong>" .
+                                                                " - номер объявления: " . $nigativeAd["n_Объявления"] . "<br>";
+                                                        }
+                                                        echo "</div>"; // tabul
+                                                        ?>
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <?php
-                                echo "</div>"; // color red list search queries
+                                            <?php
+                                    echo "</div>"; // color red list search queries
 
-                                echo "<br>";
-                                echo "<br>";
+                                    echo "<br>";
+                                    echo "<br>";
+
+                                }
                             }
                             ?>
                             </div>
@@ -90,40 +96,29 @@ foreach ($adGroups as $group_row):
 
         <strong>ОБЩИЕ ЗНАЧЕНИЯ ПО ГРУППЕ</strong>
         <?php
-            echo "<br><br>";
-//            if(!empty($group_totals["Показы"])) : echo "ПОКАЗОВ по группе == " . $group_totals["Показы"] . "<br>"; endif;
-            if(!empty($group_totals["Показы"])) : echo "ПОКАЗОВ по группе == " . '<span data-field="Показы">' . $group_totals["Показы"] . '</span>' . "<br>"; endif;
+        echo "<br><br>";
+        if(!empty($group_totals["Показы"])) : echo "ПОКАЗОВ по группе == " . '<span data-field="Показы">' . $group_totals["Показы"] . '</span>' . "<br>"; endif;
+        if(!empty($group_totals["Клики"])) : echo "КЛИКИ по группе == " . '<span data-field="Клики">' . $group_totals["Клики"] . '</span>' . "<br>"; endif;
+        if(!empty($group_totals["Расход_руб"])) : echo "РАСХОД (руб) по группе == " . '<span data-field="Расход_руб">' . $group_totals["Расход_руб"] . '</span>' . " ₽<br>"; endif;
 
-//            if(!empty($group_totals["Клики"])) : echo "КЛИКИ по группе == " . $group_totals["Клики"] . "<br>"; endif;
-            if(!empty($group_totals["Клики"])) : echo "КЛИКИ по группе == " . '<span data-field="Клики">' . $group_totals["Клики"] . '</span>' . "<br>"; endif;
+        if(!empty($group_totals["Конверсии"])) :
+            echo "КОНВЕРСИИ по группе == " . '<span data-field="Конверсии">' . $group_totals["Конверсии"] . '</span>' . "<br>";
+            else: echo "<strong class='color_red'>(!) ВСЯ ГРУППА НИГАТИНАЯ, 0 конверсий</strong>" . '<span data-field="Конверсии">' . "0" . '</span>';
+        endif;
 
-//            if(!empty($group_totals["Расход_руб"])) : echo "РАСХОД (руб) по группе == " . $group_totals["Расход_руб"] . " ₽<br>"; endif;
-            if(!empty($group_totals["Расход_руб"])) : echo "РАСХОД (руб) по группе == " . '<span data-field="Расход_руб">' . $group_totals["Расход_руб"] . '</span>' . " ₽<br>"; endif;
+        if(!empty($group_totals["Доход_руб"])) : echo "ДОХОД (руб) по группе == " . '<span data-field="Доход_руб">' . $group_totals["Доход_руб"] . '</span>' . " ₽<br>"; endif;
 
-            if(!empty($group_totals["Конверсии"])) :
-//                echo "КОНВЕРСИИ по группе == " . $group_totals["Конверсии"] . "<br>";
-                echo "КОНВЕРСИИ по группе == " . '<span data-field="Конверсии">' . $group_totals["Конверсии"] . '</span>' . "<br>";
-                else: echo "<strong class='color_red'>(!) ВСЯ ГРУППА НИГАТИНАЯ, 0 конверсий</strong>" . '<span data-field="Конверсии">' . "0" . '</span>';
-            endif;
-
-//            if(!empty($group_totals["Доход_руб"])) : echo "ДОХОД (руб) по группе == " . $group_totals["Доход_руб"] . " ₽<br>"; endif;
-            if(!empty($group_totals["Доход_руб"])) : echo "ДОХОД (руб) по группе == " . '<span data-field="Доход_руб">' . $group_totals["Доход_руб"] . '</span>' . " ₽<br>"; endif;
+        if(!empty($group_row["PPAGroupe"])) : echo "СТОИМОСТЬ КЛИЕНТА (руб) по группе == " . $group_row["PPAGroupe"] . " ₽ (расход разделенный на кол-во конверсий)<br>";
+            else : echo "<div class='color_yellow'>Нет конверсий - стоимость клиента не рассчитывается</div>";
+        endif;
         ?>
         <br><br><strong>СРЕДНИЕ ЗНАЧЕНИЯ ПО ГРУППЕ</strong><br><br>
         <?php
-//        if(!empty($group_totals["Ср_позиция_кликов"])) : echo "Ср. позиция кликов ≈ " . $group_totals["Ср_позиция_кликов"] . "<br>"; endif;
         if(!empty($group_totals["Ср_позиция_кликов"])) : echo "Ср. позиция кликов ≈ " . '<span data-field="Ср_позиция_кликов">' . $group_totals["Ср_позиция_кликов"] . '</span>' . "<br>"; endif;
-
-//        if(!empty($group_totals["Глубина_стр"])) : echo "Глубина_стр ≈ " . $group_totals["Глубина_стр"] . "<br>"; endif;
         if(!empty($group_totals["Глубина_стр"])) : echo "Глубина_стр ≈ " . '<span data-field="Глубина_стр">' . $group_totals["Глубина_стр"] . '</span>' . "<br>"; endif;
-
-//        if(!empty($group_totals["Ср_объём_трафика"])) : echo "Ср_объём_трафика ≈ " . $group_totals["Ср_объём_трафика"] . "<br>"; endif;
         if(!empty($group_totals["Ср_объём_трафика"])) : echo "Ср_объём_трафика ≈ " . '<span data-field="Ср_объём_трафика">' . $group_totals["Ср_объём_трафика"] . '</span>' . "<br>"; endif;
-
-//        if(!empty($group_totals["Ср_позиция_показов"])) : echo "Ср_позиция_показов ≈ " . $group_totals["Ср_позиция_показов"] . "<br>"; endif;
         if(!empty($group_totals["Ср_позиция_показов"])) : echo "Ср_позиция_показов ≈ " . '<span data-field="Ср_позиция_показов">' . $group_totals["Ср_позиция_показов"] . '</span>' . "<br>"; endif;
 
-//        if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цена_клика_руб ≈ " . $group_totals["Ср_цена_клика_руб"] . "<br>"; endif;
         if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цена_клика_руб ≈ " . '<span data-field="Ср_цена_клика_руб">' . $group_totals["Ср_цена_клика_руб"] . '</span>' . "<br>"; endif;
         ?>
         <br>

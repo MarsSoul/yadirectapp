@@ -2,10 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Interfaces\Controllers\HomeControllerInterface;
 use App\Models\GetReportModel;
 use DateTime;
 
-class HomeController extends BaseController
+class HomeController extends BaseController implements HomeControllerInterface
 {
     public function index()
     {

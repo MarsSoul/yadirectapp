@@ -46,6 +46,7 @@ trait CollectCampaignsTrait
                     'totals' => [],
                     'haveNigativeGroup' => false,
                     'campaignRows' => 0,
+                    'PPACampaign' => 0,
                 ];
             }
 
@@ -83,22 +84,21 @@ trait CollectCampaignsTrait
                     $campaign['totals'][$field] = round($campaign['totals'][$field] / $campaign['campaignRows'], 3);
                 }
             }
+
+            if ($campaign['totals']["Конверсии"] != "0.00" && $campaign['totals']["Конверсии"] != 0.00 && $campaign['totals']["Конверсии"] != "-") {
+                $campaign['PPACampaign'] = $campaign['totals']["Расход_руб"] / $campaign['totals']["Конверсии"];
+                $campaign['PPACampaign'] = round($campaign['PPACampaign'] , 2);
+            }
         }
 
         $keys = array_keys($campaigns);
 
-        if ($keys[0] === '' || count($keys) === 0) {
+        if ($keys[0] === '' && count($keys) === 0) {
             $error404 = new Error404Controller();
             $error404->index("Нет кампаний в отчете");
-            die();
+//            die($campaign['totals']);
         }
 
         return array_values($campaigns);
     }
 }
-
-    //Ср_цена_клика_руб
-    //Ср_позиция_показов
-    //Ср_объём_трафика
-    //Ср_позиция_кликов
-    //Глубина_стр

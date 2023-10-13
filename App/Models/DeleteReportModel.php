@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class DeleteReportModel extends BaseModel
+use App\Interfaces\Models\DeleteReportModelInterface;
+
+class DeleteReportModel extends BaseModel implements DeleteReportModelInterface
 {
     public function deleteReport($reportId, $tableName)
     {

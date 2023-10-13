@@ -2,9 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Interfaces\Controllers\DeleteReportControllerInterface;
 use App\Models\DeleteReportModel;
 
-class DeleteReportController extends BaseController
+class DeleteReportController extends BaseController implements DeleteReportControllerInterface
 {
     public function deleteReport($reportId, $tableName)
     {

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
+use App\Interfaces\Models\GetReportModelInterface;
 
-class GetReportModel extends BaseModel
+class GetReportModel extends BaseModel implements GetReportModelInterface
 {
     public function getAllReports()
     {

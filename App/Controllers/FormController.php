@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Interfaces\Controllers\FormControllerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -9,12 +10,12 @@ use DateTime;
 use App\Models\UploadReportModel;
 
 // TODO DRY , clean , naming
-// TODO interfe
+
 // TODO trait
 // TODO err
 // TODO comm
 
-class FormController extends BaseController
+class FormController extends BaseController implements FormControllerInterface
 {
     public function uploadReport()
     {

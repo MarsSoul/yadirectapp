@@ -38,6 +38,12 @@
                 endif;
             endif;
             if(!empty($campaign_totals["Доход_руб"])) : echo "ДОХОД (руб) по кампании == " . $campaign_totals["Доход_руб"] . " ₽<br>"; endif;
+
+            if(!empty($campaign_row["PPACampaign"])) : echo "СТОИМОСТЬ КЛИЕНТА (руб) по кампании == " . $campaign_row["PPACampaign"] . " ₽ (расход разделенный на кол-во конверсий)<br>";
+                else : echo "<div class='color_yellow'>Нет конверсий - стоимость клиента не рассчитывается</div>";
+            endif;
+
+//            var_dump($campaign_row["PPA"]);
             ?>
 
             <br><br><strong>СРЕДНИЕ ЗНАЧЕНИЯ ПО КАМПАНИИ</strong><br><br>

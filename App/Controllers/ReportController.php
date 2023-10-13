@@ -2,17 +2,18 @@
 
 namespace App\Controllers;
 
+use App\Interfaces\Controllers\ReportControllerInterface;
 use App\Traits\ReportDataTrait;
 use App\Traits\CollectCampaignsTrait;
 use App\Traits\CollectAdGroupsTrait;
 use App\Models\GetReportModel;
 
 // TODO DRY , clean , naming
-// TODO interfe
+
 // TODO err
 // TODO comm
 
-class ReportController extends BaseController
+class ReportController extends BaseController implements ReportControllerInterface
 {
     use ReportDataTrait, CollectCampaignsTrait, CollectAdGroupsTrait;
 
