@@ -3,3 +3,4 @@
 /vendor/
 DEL_ME.txt
 /Reports/
+.env

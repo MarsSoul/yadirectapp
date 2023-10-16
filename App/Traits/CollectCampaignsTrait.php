@@ -84,10 +84,11 @@ trait CollectCampaignsTrait
                     $campaign['totals'][$field] = round($campaign['totals'][$field] / $campaign['campaignRows'], 3);
                 }
             }
-
-            if ($campaign['totals']["Конверсии"] != "0.00" && $campaign['totals']["Конверсии"] != 0.00 && $campaign['totals']["Конверсии"] != "-") {
-                $campaign['PPACampaign'] = $campaign['totals']["Расход_руб"] / $campaign['totals']["Конверсии"];
-                $campaign['PPACampaign'] = round($campaign['PPACampaign'] , 2);
+            if (isset($campaign['totals']["Конверсии"])) {
+                if ($campaign['totals']["Конверсии"] != "0.00" && $campaign['totals']["Конверсии"] != 0.00 && $campaign['totals']["Конверсии"] != "-") {
+                    $campaign['PPACampaign'] = $campaign['totals']["Расход_руб"] / $campaign['totals']["Конверсии"];
+                    $campaign['PPACampaign'] = round($campaign['PPACampaign'] , 2);
+                }
             }
         }
 

@@ -31,12 +31,14 @@
             if(!empty($campaign_totals["Клики"])) : echo "КЛИКИ по кампании == " . $campaign_totals["Клики"] . "<br>"; endif;
             if(!empty($campaign_totals["Расход_руб"])) : echo "РАСХОД (руб) по кампании == " . $campaign_totals["Расход_руб"] . " ₽<br>"; endif;
 
-            if(!empty($campaign_totals["Конверсии"])) :
+            if(!empty($campaign_totals["Конверсии"])):
                 if($campaign_totals["Конверсии"] === "0.00") :
-                    echo "<strong class='color_red'>(!) ВСЯ КАМПАНИЯ НИГАТИНАЯ, 0 конверсий</strong>";
+                    echo "<strong class='color_red'>(!) ВСЯ КАМПАНИЯ НИГАТИНАЯ, 0 конверсий</strong><br>";
                     else: echo "КОНВЕРСИИ по кампании == " . $campaign_totals["Конверсии"] . "<br>";
                 endif;
+            else: echo "<strong class='color_red'>(!) ВСЯ КАМПАНИЯ НИГАТИНАЯ, 0 конверсий</strong><br>";
             endif;
+
             if(!empty($campaign_totals["Доход_руб"])) : echo "ДОХОД (руб) по кампании == " . $campaign_totals["Доход_руб"] . " ₽<br>"; endif;
 
             if(!empty($campaign_row["PPACampaign"])) : echo "СТОИМОСТЬ КЛИЕНТА (руб) по кампании == " . $campaign_row["PPACampaign"] . " ₽ (расход разделенный на кол-во конверсий)<br>";

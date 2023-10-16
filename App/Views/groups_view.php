@@ -108,9 +108,25 @@ foreach ($adGroups as $group_row):
 
         if(!empty($group_totals["Доход_руб"])) : echo "ДОХОД (руб) по группе == " . '<span data-field="Доход_руб">' . $group_totals["Доход_руб"] . '</span>' . " ₽<br>"; endif;
 
+        echo "<br>";
+
         if(!empty($group_row["PPAGroupe"])) : echo "СТОИМОСТЬ КЛИЕНТА (руб) по группе == " . $group_row["PPAGroupe"] . " ₽ (расход разделенный на кол-во конверсий)<br>";
-            else : echo "<div class='color_yellow'>Нет конверсий - стоимость клиента не рассчитывается</div>";
+            else : echo "<div class='color_yellow'>Нет конверсий/кликов - стоимость клиента не рассчитывается</div>";
         endif;
+
+        if(!empty($group_row["PPCGroupe"])) : echo "Коэффициент конверсии PPC (%) по группе == " . $group_row["PPCGroupe"] . " % ( (кол-во конверсий разделенный на кол-во кликов)*100 )<br>";
+        else : echo "<div class='color_yellow'>Нет конверсий/кликов - PPC не рассчитывается</div>";
+        endif;
+
+
+        if(!empty($group_row["CTRGroupe"])) : echo "CTR (%) по группе == " . $group_row["CTRGroupe"] . " % ( кол-во клики разделенный на кол-во показов )<br>";
+        else : echo "<div class='color_yellow'>Нет показов/кликов - CTR не рассчитывается</div>";
+        endif;
+
+        if(!empty($group_row["wCTRGroupe"])) : echo "wCTR (%) по группе == " . $group_row["wCTRGroupe"] . " % ( кол-во клики разделенный на кол-во Взвешенных показов )<br>";
+        else : echo "<div class='color_yellow'>Нет взвешенных показов/кликов - wCTR не рассчитывается</div>";
+        endif;
+
         ?>
         <br><br><strong>СРЕДНИЕ ЗНАЧЕНИЯ ПО ГРУППЕ</strong><br><br>
         <?php

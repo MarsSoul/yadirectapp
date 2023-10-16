@@ -44,6 +44,9 @@ trait CollectAdGroupsTrait
                     'groupeRows' => 0,
                     'listNigativeAd' => [],
                     'PPAGroupe' => 0,
+                    'PPCGroupe' => 0,
+                    'CTRGroupe' => 0,
+                    'wCTRGroupe' => 0,
                 ];
             }
 
@@ -98,9 +101,40 @@ trait CollectAdGroupsTrait
                     $adGroup['totals'][$field] = round($adGroup['totals'][$field] / $adGroup['groupeRows'], 3);
                 }
             }
-            if ($adGroup['totals']["Конверсии"] != "0.00" && $adGroup['totals']["Конверсии"] != 0.00 && $adGroup['totals']["Конверсии"] != "-") {
-                $adGroup['PPAGroupe'] = $adGroup['totals']["Расход_руб"] / $adGroup['totals']["Конверсии"];
-                $adGroup['PPAGroupe'] = round($adGroup['PPAGroupe'] , 2);
+
+            // PPAGroupe, PPCGroupe
+            if (isset($adGroup['totals']["Клики"]) && isset($adGroup['totals']["Конверсии"])) {
+                if ($adGroup['totals']["Клики"] != "0" && $adGroup['totals']["Клики"] != 0 && $adGroup['totals']["Клики"] != "-") {
+                    if ($adGroup['totals']["Конверсии"] != "0.00" && $adGroup['totals']["Конверсии"] != 0.00 && $adGroup['totals']["Конверсии"] != "-") {
+                        // PPAGroupe
+                        if (isset($adGroup['totals']["Расход_руб"])) {
+                            $adGroup['PPAGroupe'] = $adGroup['totals']["Расход_руб"] / $adGroup['totals']["Конверсии"];
+                            $adGroup['PPAGroupe'] = round($adGroup['PPAGroupe'], 2);
+                        }
+                        // PPCGroupe
+                        $adGroup['PPCGroupe'] = $adGroup['totals']["Конверсии"] / $adGroup['totals']["Клики"] * 100;
+                        $adGroup['PPCGroupe'] = round($adGroup['PPCGroupe'], 2);
+                    }
+                }
+            }
+            // CTR, wCTR
+            if (isset($adGroup['totals']["Клики"])) {
+                if ($adGroup['totals']["Клики"] != "0" && $adGroup['totals']["Клики"] != 0 && $adGroup['totals']["Клики"] != "-") {
+                    // CTR
+                    if (isset($adGroup['totals']["Показы"])) {
+                        if ($adGroup['totals']["Показы"] != "0" && $adGroup['totals']["Показы"] != 0 && $adGroup['totals']["Показы"] != "-") {
+                            $adGroup['CTRGroupe'] = $adGroup['totals']["Клики"] / $adGroup['totals']["Показы"];
+                            $adGroup['CTRGroupe'] = round($adGroup['CTRGroupe'], 2);
+                        }
+                    }
+                    // wCTR
+                    if (isset($adGroup['totals']["Взвешенные_показы"])) {
+                        if ($adGroup['totals']["Взвешенные_показы"] != "0" && $adGroup['totals']["Взвешенные_показы"] != 0 && $adGroup['totals']["Взвешенные_показы"] != "-") {
+                            $adGroup['wCTRGroupe'] = $adGroup['totals']["Клики"] / $adGroup['totals']["Взвешенные_показы"];
+                            $adGroup['wCTRGroupe'] = round($adGroup['wCTRGroupe'], 2);
+                        }
+                    }
+                }
             }
         }
 
