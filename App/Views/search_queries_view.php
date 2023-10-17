@@ -17,7 +17,6 @@
     </thead>
     <tbody>
         <?php foreach($ads as $row) :
-//            var_dump($row["Конверсии"]);
             $backgroundNigativeConverion = '';
 
             if ($row["Конверсии"] == "0" || $row["Конверсии"] == "-") {

@@ -6,6 +6,7 @@ use App\Interfaces\Controllers\ReportControllerInterface;
 use App\Traits\ReportDataTrait;
 use App\Traits\CollectCampaignsTrait;
 use App\Traits\CollectAdGroupsTrait;
+use App\Traits\CollectAdGroupTrait;
 use App\Models\GetReportModel;
 
 // TODO DRY , clean , naming
@@ -15,7 +16,7 @@ use App\Models\GetReportModel;
 
 class ReportController extends BaseController implements ReportControllerInterface
 {
-    use ReportDataTrait, CollectCampaignsTrait, CollectAdGroupsTrait;
+    use ReportDataTrait, CollectCampaignsTrait, CollectAdGroupsTrait, CollectAdGroupTrait;
 
     public function showReport($id)
     {
@@ -59,6 +60,35 @@ class ReportController extends BaseController implements ReportControllerInterfa
             'table_name' => $table_name
         ];
         $this->renderView('groups_view', $data);
+    }
+
+    public function showAdGroup($campaign_id, $group_id, $table_name)
+    {
+        $reportsModel = new GetReportModel();
+        $adGroup = $this->collectAdGroup($reportsModel->getGroupsByCampaignId($table_name, $campaign_id), $group_id);
+
+//        $adGroup = null;
+//        foreach ($adGroups as $group) {
+//            if ($group['group']['n_Группы'] == $group_id) {
+//                $adGroup = $group;
+//                break;
+//            }
+//        }
+//        var_dump($adGroup);
+//die();
+        if (!$adGroup) {
+            $error404 = new Error404Controller();
+            $error404->index("Группа не найдена");
+            die();
+        }
+//        var_dump($adGroup);
+//        die();
+        $data = [
+            'adGroup' => $adGroup,
+            'table_name' => $table_name,
+        ];
+
+        $this->renderView('group_view', $data);
     }
 
     public function showAds($campaign_id, $group_id, $table_name)
