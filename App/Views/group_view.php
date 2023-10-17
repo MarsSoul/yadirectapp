@@ -14,9 +14,7 @@ if ($adGroup[0]["haveNigativeAd"]) :
     $nigative_search_queries = $adGroup[0]["listNigativeAd"];
 endif;
 ?>
-<!--Всего поисковых запросов : --><?php //print_r($adGroup[0]["groupeRows"]); ?><!--<br>-->
 Всего поисковых запросов : <?php print_r($count_search_queries) ?><br>
-<!--Всего объявлений : --><?php //print_r(count($adGroup[0]["allAd"])); ?><!--<br>-->
 Всего объявлений : <?php print_r($count_ads); ?><br>
 
 <br>
@@ -41,7 +39,7 @@ echo "<br>";
 if(!empty($adGroup[0]["PPAGroupe"])) : echo "СТОИМОСТЬ КЛИЕНТА (руб) по группе == " . $adGroup[0]["PPAGroupe"] . " ₽ (расход разделенный на кол-во конверсий)<br>";
 else : echo "<div class='color_yellow'>Нет конверсий/кликов - стоимость клиента не рассчитывается</div>";
 endif;
-
+//var_dump($adGroup[0]);
 if(!empty($adGroup[0]["PPCGroupe"])) : echo "Коэффициент конверсии PPC (%) по группе == " . $adGroup[0]["PPCGroupe"] . " % ( (кол-во конверсий разделенный на кол-во кликов)*100 )<br>";
 else : echo "<div class='color_yellow'>Нет конверсий/кликов - PPC не рассчитывается</div>";
 endif;
@@ -70,6 +68,119 @@ if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цен
 <br>
 
 <div class="tabul">
+
+
+    <div class="accordion">
+        <div class="accordion-item">
+            <div class="accordion-header"><strong class='color_fiolet'>ОБЪЯВЛЕНИЯ И ИХ СТАТИСТИКА В ЭТОЙ ГРУППЕ: 🢃показать🢃</strong></div>
+
+            <div class="accordion-content">
+СОРТИРОВКА ПО ОБЩИМ ЗНАЧЕНИЯМ СРЕДИ ОБЪЯВЛЕНИЙ В ЭТОЙ ГРУППЕ<br>
+<button data-sort="Показы" data-order="asc">Сортировать по <strong>показам</strong></button>
+<button data-sort="Клики" data-order="asc">Сортировать по <strong>кликам</strong></button>
+<button data-sort="Расход_руб" data-order="asc">Сортировать по <strong>расходу</strong></button>
+<button data-sort="Конверсии" data-order="asc">Сортировать по <strong>конверсии</strong></button>
+<button data-sort="Доход_руб" data-order="asc">Сортировать по <strong>доходу</strong></button>
+<br>
+<!--СОРТИРОВКА ПО СРЕДНИМ ЗНАЧЕНИЯМ СРЕДИ ОБЪЯВЛЕНИЙ В ЭТОЙ ГРУППЕ<br>-->
+<!--<button data-sort="Ср_позиция_кликов" data-order="asc">Сортировать по <strong>Ср. позиция кликов</strong></button>-->
+<!--<button data-sort="Глубина_стр" data-order="asc">Сортировать по <strong>Глубине стр.</strong></button>-->
+<!--<button data-sort="Ср_объём_трафика" data-order="asc">Сортировать по <strong>Ср. объёму трафика</strong></button>-->
+<!--<button data-sort="Ср_позиция_показов" data-order="asc">Сортировать по <strong>Ср. позиции показов</strong></button>-->
+<!--<button data-sort="Ср_цена_клика_руб" data-order="asc">Сортировать по <strong>Ср. цене клика руб.</strong></button>-->
+                <div  class="ad-list"> <!-- ad-list sort-->
+
+                <?php
+                foreach ($all_ads as $nomber_ad => $ad) {
+                    $search_queries_ad = $ad["rows"];
+                    $totals_ad = $ad["totalAd"]["totals"];
+                    $count_search_queries_ad = $ad["totalAd"]["groupeRows"];
+//                    var_dump($nomber_ad);
+                    ?>
+                    <div class="ad" data-показы="<?= $totals_ad['Расход_руб'] ?>"> <!-- ad sort-->
+                        <?php
+                        echo "<br>";
+                        echo "<strong class='color_green'>Номер объявления: " . $nomber_ad . "</strong>";
+                        echo "<br>";
+
+                        echo "<div class='tabul'>";
+    //                        var_dump($ad["totalAd"]);
+                            echo "<br><strong>ВСЕГО ПОИСКОВЫХ ЗАПРОСОВ В ОБЪЯВЛЕНИИ == " . $count_search_queries_ad . "</strong><br>";
+                            ?>
+                            <div class="tabul">
+                                <div class="accordion">
+                                    <div class="accordion-item">
+                                        <div class="accordion-header"><strong class='color_fiolet'>ПОИСКОВЫЕ ЗАПРОСЫ В ОБЪЯВЛЕНИИ: 🢃показать🢃</strong></div>
+
+                                        <div class="accordion-content">
+
+                                            <?php
+                                            foreach ($search_queries_ad as $search_queri_ad) {
+                            //                    print_r($search_queri_ad);
+                                                echo "* строка в отчете: " . $search_queri_ad["id"] .
+                                                    " - поисковый запрос: <strong>" . $search_queri_ad["Поисковый_запрос"] . "</strong>" .
+                                                    " - номер объявления: " . $search_queri_ad["n_Объявления"] . "<br>";
+                                            }
+
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+    <strong><br>ОБЩИЕ ЗНАЧЕНИЯ ПО ОБЪЯВЛЕНИЮ</strong>
+    <?php
+    echo "<br><br>";
+    if(!empty($totals_ad["Показы"])) : echo "ПОКАЗОВ по объявлению == " . '<span data-field="Показы">' . $totals_ad["Показы"] . '</span>' . "<br>"; endif;
+    if(!empty($totals_ad["Клики"])) : echo "КЛИКИ по объявлению == " . '<span data-field="Клики">' . $totals_ad["Клики"] . '</span>' . "<br>"; endif;
+    if(!empty($totals_ad["Расход_руб"])) : echo "РАСХОД (руб) по объявлению == " . '<span data-field="Расход_руб">' . $totals_ad["Расход_руб"] . '</span>' . " ₽<br>"; endif;
+
+    if(!empty($totals_ad["Конверсии"])) :
+        echo "КОНВЕРСИИ по объявлению == " . '<span data-field="Конверсии">' . $totals_ad["Конверсии"] . '</span>' . "<br>";
+    else: echo "<strong class='color_red'>(!) ВСЕ ОБЪЯВЛЕНИЕ НИГАТИВНОЕ, 0 конверсий</strong>" . '<span data-field="Конверсии">' . "0" . '</span>';
+    endif;
+
+    if(!empty($totals_ad["Доход_руб"])) : echo "ДОХОД (руб) по объявлению == " . '<span data-field="Доход_руб">' . $totals_ad["Доход_руб"] . '</span>' . " ₽<br>"; endif;
+
+    echo "<br>";
+
+// TODO  add in ad PPA PPC CTR wCTR
+
+//    if(!empty($totals_ad[0]["PPAGroupe"])) : echo "СТОИМОСТЬ КЛИЕНТА (руб) по группе == " . $totals_ad[0]["PPAGroupe"] . " ₽ (расход разделенный на кол-во конверсий)<br>";
+//    else : echo "<div class='color_yellow'>Нет конверсий/кликов - стоимость клиента не рассчитывается</div>";
+//    endif;
+//
+//    if(!empty($totals_ad[0]["PPCGroupe"])) : echo "Коэффициент конверсии PPC (%) по группе == " . $adGroup[0]["PPCGroupe"] . " % ( (кол-во конверсий разделенный на кол-во кликов)*100 )<br>";
+//    else : echo "<div class='color_yellow'>Нет конверсий/кликов - PPC не рассчитывается</div>";
+//    endif;
+//
+//
+//    if(!empty($totals_ad[0]["CTRGroupe"])) : echo "CTR (%) по группе == " . $totals_ad[0]["CTRGroupe"] . " % ( кол-во клики разделенный на кол-во показов )<br>";
+//    else : echo "<div class='color_yellow'>Нет показов/кликов - CTR не рассчитывается</div>";
+//    endif;
+//
+//    if(!empty($totals_ad[0]["wCTRGroupe"])) : echo "wCTR (%) по группе == " . $totals_ad[0]["wCTRGroupe"] . " % ( кол-во клики разделенный на кол-во Взвешенных показов )<br>";
+//    else : echo "<div class='color_yellow'>Нет взвешенных показов/кликов - wCTR не рассчитывается</div>";
+//    endif;
+
+
+
+
+                        echo "</div>";
+                    echo "<br>";
+                echo "</div>"; // ad end sort
+
+                }
+                ?>
+                </div>   <!-- ad-list end sort-->
+
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
 
     <div class="color_red"><strong>НИГАТИВНЫЕ ПОИСКОВЫЕ ЗАПРОСЫ</strong></strong></div> <br><br>
 
@@ -199,25 +310,6 @@ if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цен
     else: echo '<div class="color_red">(!) Нет поисковых запросов с конверсией</div>';
     endif;
     ?>
-
-    <br>
-    <br>
-
-    <div class="accordion">
-        <div class="accordion-item">
-            <div class="accordion-header"><strong class='color_fiolet'>ОБЪЯВЛЕНИЯ И ИХ СТАТИСТИКА В ЭТОЙ ГРУППЕ: 🢃показать🢃</strong></div>
-
-            <div class="accordion-content">
-                <?php
-                foreach ($all_ads as $nomber_ad => $ad) {
-                    var_dump($nomber_ad);
-                    echo "<br>";
-                }
-                ?>
-            </div>
-
-        </div>
-    </div>
 
     <br>
     <br>

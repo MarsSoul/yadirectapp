@@ -2,9 +2,11 @@
 
 namespace App\Traits;
 
+use App\Traits\CollectAdTrait;
 
 trait CollectAdGroupTrait
 {
+    use CollectAdTrait;
     protected function collectAdGroup($report_data, $group_id)
     {
         $adGroups = [];
@@ -113,9 +115,12 @@ trait CollectAdGroupTrait
                         if (!isset($adGroups[$groupId]['allAd'][$adId])) {
                             $adGroups[$groupId]['allAd'][$adId] = [
                                 'rows' => [],
+                                'totalAd' => []
                             ];
                         }
                         $adGroups[$groupId]['allAd'][$adId]['rows'][] = $row;
+                        $adGroups[$groupId]['allAd'][$adId]['totalAd'] = $this->collectAd($adGroups[$groupId]['allAd'][$adId]['rows'], $average_fields);
+
                     }
 
                 }
