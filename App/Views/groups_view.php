@@ -111,7 +111,7 @@ foreach ($adGroups as $group_row):
         echo "<br>";
 
         if(!empty($group_row["PPAGroupe"])) : echo "СТОИМОСТЬ КЛИЕНТА (руб) по группе == " . $group_row["PPAGroupe"] . " ₽ (расход разделенный на кол-во конверсий)<br>";
-            else : echo "<div class='color_yellow'>Нет конверсий/кликов - стоимость клиента не рассчитывается</div>";
+            else : echo "<div class='color_yellow'>Нет расходa/кликов - стоимость клиента не рассчитывается</div>";
         endif;
 
         if(!empty($group_row["PPCGroupe"])) : echo "Коэффициент конверсии PPC (%) по группе == " . $group_row["PPCGroupe"] . " % ( (кол-во конверсий разделенный на кол-во кликов)*100 )<br>";

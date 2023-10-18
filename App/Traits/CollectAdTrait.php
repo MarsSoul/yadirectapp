@@ -26,6 +26,10 @@ trait CollectAdTrait
         $totalAd = [
             'totals' => [],
             'groupeRows' => 0,
+            'PPAAd' => 0,
+            'PPCAd' => 0,
+            'CTRAd' => 0,
+            'wCTRAd' => 0,
         ];
 
         foreach ($ad as $row) {
@@ -56,6 +60,40 @@ trait CollectAdTrait
                 $totalAd['totals'][$field] = round($totalAd['totals'][$field] / $totalAd['groupeRows'], 3);
             }
         }
+
+//        ======
+        if (isset($totalAd['totals']["Клики"]) && isset($totalAd['totals']["Конверсии"])) {
+            if ($totalAd['totals']["Клики"] != 0 && $totalAd['totals']["Конверсии"] != 0) {
+                // PPA
+                if (isset($totalAd['totals']["Расход_руб"])) {
+                    $totalAd['PPAAd'] = $totalAd['totals']["Расход_руб"] / $totalAd['totals']["Конверсии"];
+                    $totalAd['PPAAd'] = round($totalAd['PPAAd'], 2);
+                }
+                // PPC
+                $totalAd['PPCAd'] = $totalAd['totals']["Конверсии"] / $totalAd['totals']["Клики"] * 100;
+                $totalAd['PPCAd'] = round($totalAd['PPCAd'], 2);
+            }
+        }
+        // CTR, wCTR
+        if (isset($totalAd['totals']["Клики"])) {
+            if ($totalAd['totals']["Клики"] != 0) {
+                // CTR
+                if (isset($totalAd['totals']["Показы"])) {
+                    if ($totalAd['totals']["Показы"] != 0) {
+                        $totalAd['CTRAd'] = $totalAd['totals']["Клики"] / $totalAd['totals']["Показы"];
+                        $totalAd['CTRAd'] = round($totalAd['CTRAd'], 2);
+                    }
+                }
+                // wCTR
+                if (isset($totalAd['totals']["Взвешенные_показы"])) {
+                    if ($totalAd['totals']["Взвешенные_показы"] != 0) {
+                        $totalAd['wCTRAd'] = $totalAd['totals']["Клики"] / $totalAd['totals']["Взвешенные_показы"];
+                        $totalAd['wCTRAd'] = round($totalAd['wCTRAd'], 2);
+                    }
+                }
+            }
+        }
+//        ======
 
         return $totalAd;
     }
