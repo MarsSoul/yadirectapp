@@ -62,6 +62,7 @@ trait CollectAdTrait
         }
 
 //        ======
+        // PPA PPC
         if (isset($totalAd['totals']["Клики"]) && isset($totalAd['totals']["Конверсии"])) {
             if ($totalAd['totals']["Клики"] != 0 && $totalAd['totals']["Конверсии"] != 0) {
                 // PPA

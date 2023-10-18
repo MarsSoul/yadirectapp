@@ -1,7 +1,17 @@
 <h1 class="color_green">НОМЕР ГРУППЫ = <?php print_r($adGroup[0]["group"]["n_Группы"]); ?> ||| НАЗВАНИЕ ГРУППЫ = <?php print_r($adGroup[0]["group"]["Группа"]); ?></h1>
 
 <?php
-//var_dump($adGroup[0]["allAd"]);
+//echo gettype($adGroup);
+
+echo '<br>all===<br>';
+var_dump($adGroup[0]["listSearchQueriesGroup"]);
+echo '<br><br>normal===<br>';
+var_dump($adGroup[0]["listNormalSearchQueriesGroup"]);
+echo '<br><br>nigative===<br>';
+var_dump($adGroup[0]["listNigativeSearchQueriesGroup"]);
+echo '<br><br>ONLY nigative===<br>';
+var_dump($adGroup[0]["listExclusivelyNigativWordsGroup"]);
+
 $group_totals = $adGroup[0]["totals"];
 $all_search_queries = $adGroup[0]["searchQueries"];
 $normal_search_queries = $adGroup[0]["listNormalAd"];
@@ -74,19 +84,19 @@ if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цен
             <div class="accordion-header"><strong class='color_fiolet'>ОБЪЯВЛЕНИЯ И ИХ СТАТИСТИКА В ЭТОЙ ГРУППЕ: 🢃показать🢃</strong></div>
 
             <div class="accordion-content">
-СОРТИРОВКА ПО ОБЩИМ ЗНАЧЕНИЯМ СРЕДИ ОБЪЯВЛЕНИЙ В ЭТОЙ ГРУППЕ<br>
-<button data-sort="Показы" data-order="asc">Сортировать по <strong>показам</strong></button>
-<button data-sort="Клики" data-order="asc">Сортировать по <strong>кликам</strong></button>
-<button data-sort="Расход_руб" data-order="asc">Сортировать по <strong>расходу</strong></button>
-<button data-sort="Конверсии" data-order="asc">Сортировать по <strong>конверсии</strong></button>
-<button data-sort="Доход_руб" data-order="asc">Сортировать по <strong>доходу</strong></button>
-<br>
-СОРТИРОВКА ПО СРЕДНИМ ЗНАЧЕНИЯМ СРЕДИ ОБЪЯВЛЕНИЙ В ЭТОЙ ГРУППЕ<br>
-<button data-sort="Ср_позиция_кликов" data-order="asc">Сортировать по <strong>Ср. позиция кликов</strong></button>
-<button data-sort="Глубина_стр" data-order="asc">Сортировать по <strong>Глубине стр.</strong></button>
-<button data-sort="Ср_объём_трафика" data-order="asc">Сортировать по <strong>Ср. объёму трафика</strong></button>
-<button data-sort="Ср_позиция_показов" data-order="asc">Сортировать по <strong>Ср. позиции показов</strong></button>
-<button data-sort="Ср_цена_клика_руб" data-order="asc">Сортировать по <strong>Ср. цене клика руб.</strong></button>
+            СОРТИРОВКА ПО ОБЩИМ ЗНАЧЕНИЯМ СРЕДИ ОБЪЯВЛЕНИЙ В ЭТОЙ ГРУППЕ<br>
+            <button data-sort="Показы" data-order="asc">Сортировать по <strong>показам</strong></button>
+            <button data-sort="Клики" data-order="asc">Сортировать по <strong>кликам</strong></button>
+            <button data-sort="Расход_руб" data-order="asc">Сортировать по <strong>расходу</strong></button>
+            <button data-sort="Конверсии" data-order="asc">Сортировать по <strong>конверсии</strong></button>
+            <button data-sort="Доход_руб" data-order="asc">Сортировать по <strong>доходу</strong></button>
+            <br>
+            СОРТИРОВКА ПО СРЕДНИМ ЗНАЧЕНИЯМ СРЕДИ ОБЪЯВЛЕНИЙ В ЭТОЙ ГРУППЕ<br>
+            <button data-sort="Ср_позиция_кликов" data-order="asc">Сортировать по <strong>Ср. позиция кликов</strong></button>
+            <button data-sort="Глубина_стр" data-order="asc">Сортировать по <strong>Глубине стр.</strong></button>
+            <button data-sort="Ср_объём_трафика" data-order="asc">Сортировать по <strong>Ср. объёму трафика</strong></button>
+            <button data-sort="Ср_позиция_показов" data-order="asc">Сортировать по <strong>Ср. позиции показов</strong></button>
+            <button data-sort="Ср_цена_клика_руб" data-order="asc">Сортировать по <strong>Ср. цене клика руб.</strong></button>
                 <div  class="ad-list"> <!-- ad-list sort-->
 
                 <?php
@@ -94,7 +104,7 @@ if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цен
                     $search_queries_ad = $ad["rows"];
                     $totals_ad = $ad["totalAd"]["totals"];
                     $count_search_queries_ad = $ad["totalAd"]["groupeRows"];
-//                    var_dump($ad["totalAd"]);
+//                    var_dump($search_queries_ad);
                     ?>
                     <div class="ad" data-показы="<?= $totals_ad['Расход_руб'] ?>"> <!-- ad sort-->
                         <?php

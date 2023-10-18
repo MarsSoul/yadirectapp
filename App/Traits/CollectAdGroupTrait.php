@@ -3,10 +3,12 @@
 namespace App\Traits;
 
 use App\Traits\CollectAdTrait;
+use App\Traits\RebuildSearchQueriesTrait;
+use App\Traits\ComparisonNigativeNormalWordsTrait;
 
 trait CollectAdGroupTrait
 {
-    use CollectAdTrait;
+    use CollectAdTrait, RebuildSearchQueriesTrait, ComparisonNigativeNormalWordsTrait;
     protected function collectAdGroup($report_data, $group_id)
     {
         $adGroups = [];
@@ -64,6 +66,10 @@ trait CollectAdGroupTrait
                         'searchQueries' => [],
                         'listNormalAd' => [],
                         'allAd' => [],
+                        'listSearchQueriesGroup' => [],
+                        'listNigativeSearchQueriesGroup' => [],
+                        'listNormalSearchQueriesGroup' => [],
+                        'listExclusivelyNigativWordsGroup' => [],
                     ];
                 }
                 $adGroups[$groupId]['searchQueries'][] = $row;
@@ -120,13 +126,43 @@ trait CollectAdGroupTrait
                         }
                         $adGroups[$groupId]['allAd'][$adId]['rows'][] = $row;
                         $adGroups[$groupId]['allAd'][$adId]['totalAd'] = $this->collectAd($adGroups[$groupId]['allAd'][$adId]['rows'], $average_fields);
-
                     }
 
+                    // all/nigativ/normal search queries in group
+                    // all
+                    if (!in_array($row['Поисковый_запрос'], $adGroups[$groupId]['listSearchQueriesGroup'])){
+                        $adGroups[$groupId]['listSearchQueriesGroup'][] = $row['Поисковый_запрос'];
+
+                    }
+                    // normal
+                    if ($row['Конверсии'] != "0" && $row['Конверсии'] != "-") {
+                        if (!in_array($row['Поисковый_запрос'], $adGroups[$groupId]['listNormalSearchQueriesGroup'])){
+                            $adGroups[$groupId]['listNormalSearchQueriesGroup'][] = $row['Поисковый_запрос'];
+                        }
+                    }
+                    // nigative
+                    else {
+                        if (!in_array($row['Поисковый_запрос'], $adGroups[$groupId]['listNigativeSearchQueriesGroup'])){
+                            $adGroups[$groupId]['listNigativeSearchQueriesGroup'][] = $row['Поисковый_запрос'];
+                        }
+                    }
                 }
                 $adGroups[$groupId]['groupeRows']++;
             }
         }
+
+
+        $allCleanWords = $this->rebuildSearchQueries($adGroups[$groupId]['listSearchQueriesGroup']);
+        $nigativeCleanWords = $this->rebuildSearchQueries($adGroups[$groupId]['listNigativeSearchQueriesGroup']);
+        $normalCleanWords = $this->rebuildSearchQueries($adGroups[$groupId]['listNormalSearchQueriesGroup']);
+        $exclusivelyNigativWordsGroupe = $this->comparisonNigativeNormalWords($nigativeCleanWords, $normalCleanWords);
+
+        $adGroups[$groupId]['listSearchQueriesGroup'] = $allCleanWords;
+        $adGroups[$groupId]['listNigativeSearchQueriesGroup'] = $nigativeCleanWords;
+        $adGroups[$groupId]['listNormalSearchQueriesGroup'] = $normalCleanWords;
+        $adGroups[$groupId]['listExclusivelyNigativWordsGroup'] = $exclusivelyNigativWordsGroupe;
+
+
 
         foreach ($adGroups as &$adGroup) {
             foreach ($average_fields as $field) {
