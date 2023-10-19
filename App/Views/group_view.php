@@ -451,14 +451,14 @@ if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цен
                     <button id="nextPage">>></button>
                     <button id="lastPage">Последняя</button>
                 </div>
-                <script>const reportData = <?= json_encode($all_search_queries); ?>//;</script>
+<!--                <script>const reportData = --><?php //= json_encode($all_search_queries); ?><!--</script>-->
+                <script>const reportData = <?= json_encode($all_search_queries); ?>;</script>
                 <!--===-->
             </div>
         </div>
     </div>
 
 </div> <!--tabul-->
-
 
 <br>
 <br>

@@ -19,7 +19,8 @@ function sortTable(table, column, order) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    const table = document.querySelector('table');
+    // const table = document.querySelector('table');
+    const table = document.querySelector('#reportTable');
     if (table) {
         const headers = table.querySelectorAll('thead th');
 
