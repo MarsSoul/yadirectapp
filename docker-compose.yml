@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  web:
+    image: webdevops/php-apache:7.4
+    restart: always
+    environment:
+      - PHP_DISPLAY_ERRORS=1
+      - PHP_MEMORY_LIMIT=2048M
+      - PHP_MAX_EXECUTION_TIME=300
+      - PHP_POST_MAX_SIZE=500M
+      - PHP_UPLOAD_MAX_FILESIZE=1024M
+      - WEB_DOCUMENT_ROOT=/app/public_html/index.php
+      - WEB_DOCUMENT_INDEX=index.php
+    ports:
+      - 8085:80
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: yadirect_db
+      MYSQL_USER: yadirect_dbu
+      MYSQL_PASSWORD: ol[mrIZ.[BE6(]oj
+    ports:
+      - 6033:3306
+    volumes:
+      - ./dbdata:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      PMA_USER:
+      PMA_PASSWORD: password
+    ports:
+      - 8081:80
+    depends_on:
+      - db
+volumes:
+  dbdata:
