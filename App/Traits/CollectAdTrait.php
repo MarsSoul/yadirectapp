@@ -30,10 +30,36 @@ trait CollectAdTrait
             'PPCAd' => 0,
             'CTRAd' => 0,
             'wCTRAd' => 0,
+
+            'listSearchQueriesAd' => [],
+            'listNigativeSearchQueriesAd' => [],
+            'listNormalSearchQueriesAd' => [],
+            'listExclusivelyNigativWordsAd' => [],
         ];
 
         foreach ($ad as $row) {
             foreach ($row as $field => $value) {
+
+                // all/nigativ/normal search queries in group
+                if ($field == 'Поисковый_запрос') {
+                    // all
+                    if (!in_array($value, $totalAd['listSearchQueriesAd'])) {
+                        $totalAd['listSearchQueriesAd'][] = $value;
+                    }
+                    // normal
+                    if ($row['Конверсии'] != "0" && $row['Конверсии'] != "-") {
+                        if (!in_array($row['Поисковый_запрос'], $totalAd['listNormalSearchQueriesAd'])){
+                            $totalAd['listNormalSearchQueriesAd'][] = $value;
+                        }
+                    }
+                    // nigative
+                    else {
+                        if (!in_array($row['Поисковый_запрос'], $totalAd['listNigativeSearchQueriesAd'])){
+                            $totalAd['listNigativeSearchQueriesAd'][] = $row['Поисковый_запрос'];
+                        }
+                    }
+                }
+
                 if (!in_array($field, $skip_fields)) {
 
                     if (!isset($totalAd['totals'][$field])) {
@@ -95,6 +121,16 @@ trait CollectAdTrait
             }
         }
 //        ======
+
+        $allCleanWords = $this->rebuildSearchQueries($totalAd['listSearchQueriesAd']);
+        $nigativeCleanWords = $this->rebuildSearchQueries($totalAd['listNigativeSearchQueriesAd']);
+        $normalCleanWords = $this->rebuildSearchQueries($totalAd['listNormalSearchQueriesAd']);
+        $exclusivelyNigativWordsAd = $this->comparisonNigativeNormalWords($nigativeCleanWords, $normalCleanWords);
+
+        $totalAd['listSearchQueriesAd'] = $allCleanWords;
+        $totalAd['listNigativeSearchQueriesAd'] = $nigativeCleanWords;
+        $totalAd['listNormalSearchQueriesAd'] = $normalCleanWords;
+        $totalAd['listExclusivelyNigativWordsAd'] = $exclusivelyNigativWordsAd;
 
         return $totalAd;
     }

@@ -3,15 +3,6 @@
 
 <?php
 
-//echo '<br>all===<br>';
-//var_dump($adGroup[0]["listSearchQueriesGroup"]);
-//echo '<br><br>normal===<br>';
-//var_dump($adGroup[0]["listNormalSearchQueriesGroup"]);
-//echo '<br><br>nigative===<br>';
-//var_dump($adGroup[0]["listNigativeSearchQueriesGroup"]);
-//echo '<br><br>ONLY nigative===<br>';
-//var_dump($adGroup[0]["listExclusivelyNigativWordsGroup"]);
-
 $group_totals = $adGroup[0]["totals"];
 $all_search_queries = $adGroup[0]["searchQueries"];
 $normal_search_queries = $adGroup[0]["listNormalAd"];
@@ -160,6 +151,46 @@ if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цен
                         echo "<br>";
 
                         echo "<div class='tabul'>";
+                            if(!empty($ad['totalAd']['listSearchQueriesAd'])) :
+                                ?>
+                                <div class="accordion">
+                                    <div class="accordion-item">
+                                        <div class="accordion-header color_green"><strong>Все</strong> ключеввые слова в объявлении: <strong>🢃показать🢃</strong></div>
+
+                                        <div class="accordion-content">
+                                            <div class="tabul">
+                                                <?php
+                                                foreach ($ad['totalAd']['listSearchQueriesAd'] as $word) {
+                                                    echo $word[0] .' - '. $word[1] . '<br>';
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php
+                            endif;
+
+                            if(!empty($ad['totalAd']['listExclusivelyNigativWordsAd'])) :
+                                ?>
+                                <div class="accordion">
+                                    <div class="accordion-item">
+                                        <div class="accordion-header color_red">В объявлении найдены <strong>нигативные</strong> ключеввые слова: <strong>🢃показать🢃</strong></div>
+
+                                        <div class="accordion-content">
+                                            <div class="tabul">
+                                                <?php
+                                                foreach ($ad['totalAd']['listExclusivelyNigativWordsAd'] as $nigative_word) {
+                                                    echo $nigative_word[0] .' - '. $nigative_word[1] . '<br>';
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php
+                            else: echo "<strong class='color_green'>Нигативных ключевых слов НЕ найдено</strong>";
+                            endif;
     //                        var_dump($ad["totalAd"]);
                             echo "<br><strong>ВСЕГО ПОИСКОВЫХ ЗАПРОСОВ В ОБЪЯВЛЕНИИ == " . $count_search_queries_ad . "</strong><br>";
                             ?>
