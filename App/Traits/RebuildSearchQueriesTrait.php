@@ -72,7 +72,7 @@ trait RebuildSearchQueriesTrait
 //                'этому', 'этот', 'эту', 'я', 'являюсь',
             ];
 
-
+        $cleanWordsSearchQueriesWithCount = [];
         $cleanWordsSearchQueries = [];
 
         foreach ($allSearchQueries as $searchQuery) {
@@ -81,6 +81,8 @@ trait RebuildSearchQueriesTrait
             $explodeSearchQuery = explode(' ', $cleanPunctuationMarks);
 
             foreach ($explodeSearchQuery as $word) {
+                $word = mb_strtolower($word);
+
                 if (!in_array($word, $prepositionsConjunctionsParticles)){
                     if (strlen($word) > 0 ) {
                         $cleanWordsSearchQueries[] = $word;
@@ -88,7 +90,18 @@ trait RebuildSearchQueriesTrait
                 }
             }
         }
+
+        $countWords = array_count_values($cleanWordsSearchQueries);
         $cleanWordsSearchQueries = array_unique($cleanWordsSearchQueries);
-        return $cleanWordsSearchQueries;
+
+        foreach ($cleanWordsSearchQueries as $word) {
+            $cleanWordsSearchQueriesWithCount[] = [$word, $countWords[$word]];
+        }
+
+        usort($cleanWordsSearchQueriesWithCount, function($a, $b) {
+            return $b[1] - $a[1];
+        });
+
+        return $cleanWordsSearchQueriesWithCount;
     }
 }

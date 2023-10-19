@@ -59,6 +59,7 @@ trait CollectAdGroupTrait
                         'haveNigativeAd' => false,
                         'groupeRows' => 0,
                         'listNigativeAd' => [],
+                        'countNigativeAd' => 0,
                         'PPAGroupe' => 0,
                         'PPCGroupe' => 0,
                         'CTRGroupe' => 0,
@@ -110,6 +111,7 @@ trait CollectAdGroupTrait
                         }
                         else {
                             $adGroups[$groupId]['listNigativeAd'][$adId]['rows'][] = $row;
+                            $adGroups[$groupId]['countNigativeAd']++;
                             $adGroups[$groupId]['haveNigativeAd'] = true;
                         }
                     }

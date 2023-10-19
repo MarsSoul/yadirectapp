@@ -1,16 +1,16 @@
+<h2 class="color_green">КАМПАНИЯ = <?php print_r($adGroup[0]["group"]["Кампания"]); ?></h2>
 <h1 class="color_green">НОМЕР ГРУППЫ = <?php print_r($adGroup[0]["group"]["n_Группы"]); ?> ||| НАЗВАНИЕ ГРУППЫ = <?php print_r($adGroup[0]["group"]["Группа"]); ?></h1>
 
 <?php
-//echo gettype($adGroup);
 
-echo '<br>all===<br>';
-var_dump($adGroup[0]["listSearchQueriesGroup"]);
-echo '<br><br>normal===<br>';
-var_dump($adGroup[0]["listNormalSearchQueriesGroup"]);
-echo '<br><br>nigative===<br>';
-var_dump($adGroup[0]["listNigativeSearchQueriesGroup"]);
-echo '<br><br>ONLY nigative===<br>';
-var_dump($adGroup[0]["listExclusivelyNigativWordsGroup"]);
+//echo '<br>all===<br>';
+//var_dump($adGroup[0]["listSearchQueriesGroup"]);
+//echo '<br><br>normal===<br>';
+//var_dump($adGroup[0]["listNormalSearchQueriesGroup"]);
+//echo '<br><br>nigative===<br>';
+//var_dump($adGroup[0]["listNigativeSearchQueriesGroup"]);
+//echo '<br><br>ONLY nigative===<br>';
+//var_dump($adGroup[0]["listExclusivelyNigativWordsGroup"]);
 
 $group_totals = $adGroup[0]["totals"];
 $all_search_queries = $adGroup[0]["searchQueries"];
@@ -22,10 +22,57 @@ $count_ads = count($all_ads);
 if ($adGroup[0]["haveNigativeAd"]) :
     echo "<p class='color_yellow'>(!) В ЭТОЙ ГРУППЕ ЕСТЬ НИГАТИВНЫЕ ЗАПРОСЫ</p>";
     $nigative_search_queries = $adGroup[0]["listNigativeAd"];
+//    var_dump($adGroup[0]["countNigativeAd"]);
+    echo "Всего нигативных поисковых запросов : " . $adGroup[0]["countNigativeAd"] . "<br>";
 endif;
 ?>
 Всего поисковых запросов : <?php print_r($count_search_queries) ?><br>
 Всего объявлений : <?php print_r($count_ads); ?><br>
+
+<?php
+if(!empty($adGroup[0]["listExclusivelyNigativWordsGroup"])) :
+?>
+    <div class="accordion">
+        <div class="accordion-item">
+            <div class="accordion-header color_red">В группе найдены <strong>нигативные</strong> ключеввые слова: <strong>🢃показать🢃</strong></div>
+
+            <div class="accordion-content">
+                <div class="tabul">
+                    <?php
+                        foreach ($adGroup[0]["listExclusivelyNigativWordsGroup"] as $nigative_word) {
+                                echo $nigative_word[0] .' - '. $nigative_word[1] . '<br>';
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+else: echo "<strong class='color_green'>Нигативных ключевых слов НЕ найдено</strong>";
+endif;
+?>
+<?php
+if(!empty($adGroup[0]["listSearchQueriesGroup"])) :
+    ?>
+    <div class="accordion">
+        <div class="accordion-item">
+            <div class="accordion-header color_green"><strong>Все</strong> ключеввые слова в группе: <strong>🢃показать🢃</strong></div>
+
+            <div class="accordion-content">
+                <div class="tabul">
+                    <?php
+                    foreach ($adGroup[0]["listSearchQueriesGroup"] as $word) {
+                        echo $word[0] .' - '. $word[1] . '<br>';
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+endif;
+?>
+
 
 <br>
 <br>
