@@ -2,8 +2,7 @@
 
 namespace App\Interfaces\Controllers;
 
-interface DeleteReportControllerInterface {
-
+interface DeleteReportControllerInterface
+{
     public function deleteReport($reportId, $tableName);
-
 }

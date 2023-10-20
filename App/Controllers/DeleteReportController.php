@@ -9,7 +9,6 @@ class DeleteReportController extends BaseController implements DeleteReportContr
 {
     public function deleteReport($reportId, $tableName)
     {
-
         $deleteReportModel = new DeleteReportModel();
 
         $result = $deleteReportModel->deleteReport($reportId, $tableName);
@@ -19,7 +18,6 @@ class DeleteReportController extends BaseController implements DeleteReportContr
             $error404 = new Error404Controller();
             $error404->index("Нне удалось удалить, проверить номер отчета и название отчета");
             die();
-//            var_dump("не удалось удалить");
         }
     }
 }

@@ -35,11 +35,10 @@ trait CollectCampaignsTrait
             'Ср_позиция_кликов',
             'Глубина_стр',
         ];
-//        var_dump($report_data);
-//        die();
+
         foreach ($report_data as $row) {
             $campaign_id = $row['n_Кампании'];
-//            var_dump($row);
+
             if (!isset($campaigns[$campaign_id])) {
                 $campaigns[$campaign_id] = [
                     'campaign' => $row,
@@ -97,7 +96,6 @@ trait CollectCampaignsTrait
         if ($keys[0] === '' && count($keys) === 0) {
             $error404 = new Error404Controller();
             $error404->index("Нет кампаний в отчете");
-//            die($campaign['totals']);
         }
 
         return array_values($campaigns);

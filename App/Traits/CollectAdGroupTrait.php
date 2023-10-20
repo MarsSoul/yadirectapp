@@ -36,20 +36,11 @@ trait CollectAdGroupTrait
             'Ср_позиция_кликов',
             'Глубина_стр',
         ];
-//        var_dump($report_data);
-//        echo "<br><br>";
-//        echo "<br><br>";
-//        die();
-//        $searchQueries = [];
+
 
         foreach ($report_data as $row) {
             if ($row['n_Группы'] == $group_id){
-//                var_dump($row);
-//                echo "<br><br>";
-//                echo "<br><br>";
-//                $searchQueries[] = $row;
 
-//                var_dump($searchQueries);
                 $groupId = $row['n_Группы'];
 
                 if (!isset($adGroups[$groupId])) {
@@ -153,7 +144,6 @@ trait CollectAdGroupTrait
             }
         }
 
-
         $allCleanWords = $this->rebuildSearchQueries($adGroups[$groupId]['listSearchQueriesGroup']);
         $nigativeCleanWords = $this->rebuildSearchQueries($adGroups[$groupId]['listNigativeSearchQueriesGroup']);
         $normalCleanWords = $this->rebuildSearchQueries($adGroups[$groupId]['listNormalSearchQueriesGroup']);
@@ -163,8 +153,6 @@ trait CollectAdGroupTrait
         $adGroups[$groupId]['listNigativeSearchQueriesGroup'] = $nigativeCleanWords;
         $adGroups[$groupId]['listNormalSearchQueriesGroup'] = $normalCleanWords;
         $adGroups[$groupId]['listExclusivelyNigativWordsGroup'] = $exclusivelyNigativWordsGroupe;
-
-
 
         foreach ($adGroups as &$adGroup) {
             foreach ($average_fields as $field) {

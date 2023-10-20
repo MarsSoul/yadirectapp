@@ -2,8 +2,7 @@
 
 namespace App\Interfaces\Controllers;
 
-interface Error404ControllerInterface {
-
+interface Error404ControllerInterface
+{
     public function index($message);
-
 }

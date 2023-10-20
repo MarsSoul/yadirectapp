@@ -1,12 +1,18 @@
-<h1>ПОИСКОВЫЕ ЗАПРОСЫ IN GRPUPE: <?= $ads[0]["Группа"]; ?>  № GROUPE : <?= $ads[0]["n_Группы"]; ?></h1>
+<h1>ПОИСКОВЫЕ ЗАПРОСЫ В ГРУППЕ: <?= $ads[0]["Группа"]; ?>  № ГРУППЫ : <?= $ads[0]["n_Группы"]; ?></h1>
 
-<table>
+
+<label for="itemsPerPage">Пагинировать по :</label>
+<input type="number" id="itemsPerPage" min="1" value="50">
+<button id="updatePerPage">применить</button>
+<br>
+<br>
+
+<table id="reportTable">
     <thead>
         <tr>
             <?php
                 $titles = array_keys($ads[0]);
                 foreach ($titles as $title) {
-//                    echo "<th>{$title}</th>";
                     echo "<th data-order='asc' class='sotr-titles'>
                         {$title}
                         <div class='sotr-titles-info'>sort me</div>
@@ -27,8 +33,15 @@
                 echo "<td>{$value}</td>";
             }
             echo '</tr>';
-
-
         endforeach; ?>
     </tbody>
 </table>
+
+<div id="pagination">
+    <button id="firstPage">Первая</button>
+    <button id="prevPage"><<</button>
+    <button id="nextPage">>></button>
+    <button id="lastPage">Последняя</button>
+</div>
+
+<script>const reportData = <?= json_encode($ads); ?>;</script>

@@ -2,7 +2,8 @@
 
 namespace App\Core;
 
-class Database {
+class Database
+{
     private $connection;
 
     public function __construct() {

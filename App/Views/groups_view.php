@@ -1,4 +1,4 @@
-<h1>GROUPS IN CAMPANI: <?= $adGroups[0]["group"]["Кампания"]; ?>  № camp : <?= $adGroups[0]["group"]["n_Кампании"]; ?></h1>
+<h1>Все группы в кампании: <?= $adGroups[0]["group"]["Кампания"]; ?> | № кампании : <?= $adGroups[0]["group"]["n_Кампании"]; ?></h1>
 
 СОРТИРОВКА ПО ОБЩИМ ЗНАЧЕНИЯМ <br>
 <button data-sort="Показы" data-order="asc">Сортировать по <strong>показам</strong></button>
@@ -37,7 +37,6 @@ foreach ($adGroups as $group_row):
 
                             <div class="accordion-content">
                             <?php
-        //                    echo "<p class='color_yellow'>СПИСОК НИГАТИВНЫХ ОБЪЯВЛЕНИЙ:</p>";
 
                             foreach ($group_row["listNigativeAd"] as $adId => $negativeAds) {
                                 if (count($negativeAds["rows"]) !== 0 ){
@@ -60,10 +59,6 @@ foreach ($adGroups as $group_row):
                                                     <div class="accordion-content">
 
                                                         <?php
-                        //                                echo "<p class='color_yellow'>СПИСОК НИГАТИВНЫХ ПОСИКОВЫХ ЗАПРОСОВ:</p>";
-//                                                        var_dump($negativeAds);
-//                                                        echo "<br>";
-//                                                        var_dump($negativeAds["rows"]);
                                                         foreach ($negativeAds["rows"] as $nigativeAd) {
 
                                                             echo "* строка в отчете: " . $nigativeAd["id"] .

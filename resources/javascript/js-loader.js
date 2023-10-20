@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function hideLoader() {
-        // console.log('X')
         loader.style.display = "none";
     }
 

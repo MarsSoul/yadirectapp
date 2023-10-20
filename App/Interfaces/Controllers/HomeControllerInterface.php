@@ -2,8 +2,7 @@
 
 namespace App\Interfaces\Controllers;
 
-interface HomeControllerInterface {
-
+interface HomeControllerInterface
+{
     public function index();
-
 }

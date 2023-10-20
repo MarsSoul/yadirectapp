@@ -1,15 +1,14 @@
-<h1>CAMPAIGN</h1>
+<h1>Все кампании в отчете</h1>
 
 <h2>
     <?php
         echo $report['date_start_report'] ." - ". $report['date_end_report']
-        ." | report name = ". $report['name_table_report'] ." | date create report ". $report['date_create_report'];
+        ." | Название отчета = ". $report['name_table_report'] ." | Дата загрузки отчета ". $report['date_create_report'];
     ?>
 </h2>
 
 <ul>
     <?php
-//    var_dump($campaigns);
     ?>
     <?php foreach($campaigns as $campaign_row) :
         $campaign = $campaign_row["campaign"];
@@ -17,8 +16,8 @@
         ?>
         <li>
             <h2>
-                <?php var_dump($campaign["n_Кампании"]); ?><br><br>
-                <?php var_dump($campaign["Кампания"]); ?><br><br>
+                Номер кампании : <?php print_r($campaign["n_Кампании"]); ?><br><br>
+                Название кампании : <?php print_r($campaign["Кампания"]); ?><br><br>
             </h2>
 
             <?php
@@ -44,8 +43,6 @@
             if(!empty($campaign_row["PPACampaign"])) : echo "СТОИМОСТЬ КЛИЕНТА (руб) по кампании == " . $campaign_row["PPACampaign"] . " ₽ (расход разделенный на кол-во конверсий)<br>";
                 else : echo "<div class='color_yellow'>Нет конверсий - стоимость клиента не рассчитывается</div>";
             endif;
-
-//            var_dump($campaign_row["PPA"]);
             ?>
 
             <br><br><strong>СРЕДНИЕ ЗНАЧЕНИЯ ПО КАМПАНИИ</strong><br><br>

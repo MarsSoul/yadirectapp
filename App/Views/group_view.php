@@ -13,7 +13,6 @@ $count_ads = count($all_ads);
 if ($adGroup[0]["haveNigativeAd"]) :
     echo "<p class='color_yellow'>(!) В ЭТОЙ ГРУППЕ ЕСТЬ НИГАТИВНЫЕ ЗАПРОСЫ</p>";
     $nigative_search_queries = $adGroup[0]["listNigativeAd"];
-//    var_dump($adGroup[0]["countNigativeAd"]);
     echo "Всего нигативных поисковых запросов : " . $adGroup[0]["countNigativeAd"] . "<br>";
 endif;
 ?>
@@ -63,7 +62,6 @@ if(!empty($adGroup[0]["listSearchQueriesGroup"])) :
 <?php
 endif;
 ?>
-
 
 <br>
 <br>
@@ -142,7 +140,6 @@ if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цен
                     $search_queries_ad = $ad["rows"];
                     $totals_ad = $ad["totalAd"]["totals"];
                     $count_search_queries_ad = $ad["totalAd"]["groupeRows"];
-//                    var_dump($search_queries_ad);
                     ?>
                     <div class="ad" data-показы="<?= $totals_ad['Расход_руб'] ?>"> <!-- ad sort-->
                         <?php
@@ -191,7 +188,7 @@ if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цен
                             <?php
                             else: echo "<strong class='color_green'>Нигативных ключевых слов НЕ найдено</strong>";
                             endif;
-    //                        var_dump($ad["totalAd"]);
+
                             echo "<br><strong>ВСЕГО ПОИСКОВЫХ ЗАПРОСОВ В ОБЪЯВЛЕНИИ == " . $count_search_queries_ad . "</strong><br>";
                             ?>
                             <div class="tabul">
@@ -203,7 +200,7 @@ if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цен
 
                                             <?php
                                             foreach ($search_queries_ad as $search_queri_ad) {
-//                                                print_r($search_queri_ad);
+
                                                 $isNigativeSearchQueri = 'color_green';
                                                 if ($search_queri_ad["Конверсии"] == '0' || $search_queri_ad["Конверсии"] == '-' || $search_queri_ad["Конверсии"] == 0) :
                                                     $isNigativeSearchQueri = 'color_red';
@@ -484,7 +481,7 @@ if(!empty($group_totals["Ср_цена_клика_руб"])) : echo "Ср_цен
                 </div>
 <!--                <script>const reportData = --><?php //= json_encode($all_search_queries); ?><!--</script>-->
                 <script>const reportData = <?= json_encode($all_search_queries); ?>;</script>
-                <!--===-->
+
             </div>
         </div>
     </div>

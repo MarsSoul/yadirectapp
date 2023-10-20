@@ -5,10 +5,6 @@ namespace App\Models;
 use App\Interfaces\Models\UploadReportModelInterface;
 use DateTime;
 
-// TODO DRY , clean , naming
-// TODO trait
-// TODO err
-// TODO comm
 
 class UploadReportModel extends BaseModel implements UploadReportModelInterface
 {
@@ -35,14 +31,27 @@ class UploadReportModel extends BaseModel implements UploadReportModelInterface
     // insert table report
     public function insertReportData($tableName, $rowData, $columns)
     {
-        $placeholders = implode(',', array_fill(0, count($rowData), '?'));
-        $columnNames = implode(',', $columns);
-        $sql = "INSERT INTO $tableName 
-            ($columnNames)
-            VALUES ($placeholders)";
+//        $placeholders = implode(',', array_fill(0, count($rowData), '?'));
+//        $columnNames = implode(',', $columns);
+//        $sql = "INSERT INTO $tableName
+//            ($columnNames)
+//            VALUES ($placeholders)";
+//
+//        $stmt = $this->db->getConnection()->prepare($sql);
+//        $stmt->execute($rowData);
+        try {
+            $placeholders = implode(',', array_fill(0, count($rowData), '?'));
+            $columnNames = implode(',', $columns);
+            $sql = "INSERT INTO $tableName ($columnNames) VALUES ($placeholders)";
 
-        $stmt = $this->db->getConnection()->prepare($sql);
-        $stmt->execute($rowData);
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $types = str_repeat('s', count($rowData));
+            $stmt->bind_param($types, ...$rowData);
+
+            $stmt->execute();
+        } catch (\Exception $e) {
+            return 'ошибка в базе: ' . $e->getMessage();
+        }
     }
 
     // for equal row in db and file

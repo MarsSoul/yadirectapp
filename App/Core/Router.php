@@ -4,10 +4,9 @@ namespace App\Core;
 
 use App\Core\Routes;
 
-//TODO 404
 
-class Router {
-
+class Router
+{
     private static $controllerNamespace = 'App\\Controllers\\';
     public static function route() {
         $requestMethod = $_SERVER['REQUEST_METHOD'];
@@ -35,7 +34,6 @@ class Router {
         list($controllerMethod, $methodName) = explode('@', $action);
         $controllerClass = self::$controllerNamespace . $controllerMethod;
         $controller = new $controllerClass();
-//        call_user_func([$controller, $methodName], $params);
         call_user_func_array([$controller, $methodName], $params);
     }
 }

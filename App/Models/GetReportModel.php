@@ -10,7 +10,6 @@ class GetReportModel extends BaseModel implements GetReportModelInterface
     {
         try {
             $sql = "SELECT * FROM dates ORDER BY id DESC";
-//            $result = $this->db->getConnection()->query($sql);
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -33,19 +32,10 @@ class GetReportModel extends BaseModel implements GetReportModelInterface
         }
     }
 
-//    private function tableExists($tableName)
-//    {
-//        $sql = "SHOW TABLES LIKE '$tableName'";
-//        $result = $this->db->getConnection()->query($sql);
-//
-//        return $result->num_rows > 0;
-//    }
-
     public function getReportData($tableName)
     {
         try {
             $sql = "SELECT * FROM $tableName";
-//            $result = $this->db->getConnection()->query($sql);
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -64,15 +54,6 @@ class GetReportModel extends BaseModel implements GetReportModelInterface
     public function getReportById($id)
     {
         try {
-//            $id = $this->db->getConnection()->real_escape_string($id);
-//            $sql = "SELECT * FROM dates WHERE id = " . $id;
-//            $result = $this->db->getConnection()->query($sql);
-//
-//            if($result){
-//                return $result->fetch_assoc();
-//            } else {
-//                return null;
-//            }
             $sql = "SELECT * FROM dates WHERE id = ?";
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->bind_param('i', $id);
@@ -88,9 +69,6 @@ class GetReportModel extends BaseModel implements GetReportModelInterface
     public function getGroupsByCampaignId($tableName, $campaignId)
     {
         try {
-//            $campaignId = $this->db->getConnection()->real_escape_string($campaignId);
-//            $sql = "SELECT * FROM $tableName WHERE n_Кампании = " . $campaignId;
-//            $result = $this->db->getConnection()->query($sql);
             $sql = "SELECT * FROM $tableName WHERE n_Кампании = ?";
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->bind_param('s', $campaignId);
@@ -116,11 +94,6 @@ class GetReportModel extends BaseModel implements GetReportModelInterface
     public function getAdsByGroupAndCampaignId($tableName, $campaignId, $groupId)
     {
         try {
-//            $campaignId = $this->db->getConnection()->real_escape_string($campaignId);
-//            $groupId = $this->db->getConnection()->real_escape_string($groupId);
-//            $sql = "SELECT * FROM $tableName WHERE n_Кампании = $campaignId AND n_Группы = $groupId";
-//            $result = $this->db->getConnection()->query($sql);
-
             $sql = "SELECT * FROM $tableName WHERE n_Кампании = ? AND n_Группы = ?";
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->bind_param('ss', $campaignId, $groupId);

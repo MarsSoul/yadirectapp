@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 groups.sort(function (groupA, groupB) {
                     const p1 = getGroupTotal(groupA, sortField);
                     const p2 = getGroupTotal(groupB, sortField);
-                    // console.log(sortField);
+
                     if (sortOrder === 'asc') {
                         return p1 - p2;
                     } else {
@@ -78,11 +78,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function getGroupTotal(groupElement, field) {
             const dataElement = groupElement.querySelector(`span[data-field="${field}"]`);
-            // console.log(dataElement);
+
             if (dataElement) {
-                // const number = parseInt(dataElement.textContent, 10);
                 const number = parseFloat(dataElement.textContent, 10);
-                // console.log(number);
+
                 if (!isNaN(number)) {
                     return number;
                 }
@@ -110,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 groups.sort(function (groupA, groupB) {
                     const p1 = getGroupTotal(groupA, sortField);
                     const p2 = getGroupTotal(groupB, sortField);
-                    // console.log(sortField);
+
                     if (sortOrder === 'asc') {
                         return p1 - p2;
                     } else {
@@ -132,11 +131,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function getGroupTotal(groupElement, field) {
             const dataElement = groupElement.querySelector(`span[data-field="${field}"]`);
-            // console.log(dataElement);
+
             if (dataElement) {
-                // const number = parseInt(dataElement.textContent, 10);
                 const number = parseFloat(dataElement.textContent, 10);
-                // console.log(number);
+
                 if (!isNaN(number)) {
                     return number;
                 }

@@ -21,7 +21,6 @@
     <thead>
         <tr>
             <?php
-//            var_dump($report_data);
                 $titles = array_keys($report_data[0]);
                 foreach ($titles as $title) {
                     echo "<th data-order='asc' class='sotr-titles'>

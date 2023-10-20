@@ -1,4 +1,4 @@
-<h1>HOME</h1>
+<h1>Домашняя страница</h1>
 
 <pre>=============================================================================================================</pre>
 
@@ -10,7 +10,7 @@
     </strong>
     ===
     <a href="report/<?php echo $lastReport['id']; ?>" target="_blank">
-        <?php echo "report name = ". $lastReport['name_table_report'];?>
+        <?php echo "Название отчета = ". $lastReport['name_table_report'];?>
     </a>
     |||||
     <a href="/campaigns/<?php echo $lastReport['id']; ?>" target="_blank">Показать кампании</a>
@@ -20,7 +20,7 @@
 
 <pre>=============================================================================================================</pre>
 
-<h1>Upload new report</h1>
+<h1>Загрузить новый отчет</h1>
 
 <?php
     if(!empty($recommendedDate)) :
@@ -35,7 +35,7 @@
 
 <pre>=============================================================================================================</pre>
 
-<h1>All reports</h1>
+<h1>История отчетов</h1>
 
 <?php if(!empty($reports)) : ?>
     <ul>
@@ -44,13 +44,18 @@
                 <a href="report/<?php echo $report['id']; ?>" target="_blank">
                     <?php
                     echo $report['date_start_report'] ." - ". $report['date_end_report']
-                        ." | report name = ". $report['name_table_report'] ." | date create report ". $report['date_create_report'];
+                        ." <br> Название отчета : ". $report['name_table_report'] ." <br> Дата загрузки отчета ". $report['date_create_report'];
                     ?>
                 </a>
-                |||||
+                <br>
+                <br>
+
                 <a href="/campaigns/<?php echo $report['id']; ?>" target="_blank">Показать кампании</a>
-                |||||
+                &nbsp;|&nbsp;
                 <a href="/report/delete/<?php echo $report['id']; ?>/<?php echo $report['name_table_report']; ?>" class="color_red"> (!) Удалить отчет</a>
+
+                <br>
+                <pre>=============================================================================================================</pre>
             </li>
         <?php endforeach; ?>
     </ul>

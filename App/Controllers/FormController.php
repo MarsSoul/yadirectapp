@@ -9,11 +9,6 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use DateTime;
 use App\Models\UploadReportModel;
 
-// TODO DRY , clean , naming
-
-// TODO trait
-// TODO err
-// TODO comm
 
 class FormController extends BaseController implements FormControllerInterface
 {
@@ -82,8 +77,6 @@ class FormController extends BaseController implements FormControllerInterface
 
                         return $name;
                     }, $columnNames);
-                    //                    var_dump($columnNames);
-                    //                    die();
 
                     $reportModel = new UploadReportModel();
                     $reportModel->createTable($reportName, $columnNames);
@@ -106,22 +99,34 @@ class FormController extends BaseController implements FormControllerInterface
                     if ($reportModel->getRowCount($reportName) == $endRow - 5) {
                         $dates = [$startDate, $endDate];
                         $reportModel->addReportInfo($reportName, $dates);
-                        // clear db table dates
+
                         $reportModel->cleanReportTables();
 
                         header('Location: /');
 
                     } else {
-                        echo 'количество строк в файле и в базе данных не совпадает, что то пошло не так';
+                        $error404 = new Error404Controller();
+                        $error404->index("Kоличество строк в файле и в базе данных не совпадает, что то пошло не так");
+                        die();
+//                        echo 'количество строк в файле и в базе данных не совпадает, что то пошло не так';
                     }
                 } else {
-                    echo "расширение файла не xlsx";
+                    $error404 = new Error404Controller();
+                    $error404->index("Расширение файла не xlsx");
+                    die();
+//                    echo "расширение файла не xlsx";
                 }
             } else {
-                echo "загрузка файла не ок";
+                $error404 = new Error404Controller();
+                $error404->index("Загрузка файла не удалась, проверить наличие файла");
+                die();
+//                echo "загрузка файла не ок";
             }
         } else {
-            echo "метод не пост";
+            $error404 = new Error404Controller();
+            $error404->index("Неправильный метод. Метод не пост");
+            die();
+//            echo "метод не пост";
         }
     }
 }

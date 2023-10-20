@@ -2,8 +2,7 @@
 
 namespace App\Interfaces\Controllers;
 
-interface FormControllerInterface {
-
+interface FormControllerInterface
+{
     public function uploadReport();
-
 }
